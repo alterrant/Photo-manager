@@ -1,6 +1,7 @@
-import {logOutRequest, signIn, signUpRequest} from "../../firebase/auth";
-import {stopSubmit, SubmissionError} from "redux-form";
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { stopSubmit, SubmissionError } from 'redux-form';
+
+import { logOutRequest, signIn, signUpRequest } from '../../firebase/auth';
 
 const initialState = {
     isAuth: false,
@@ -12,64 +13,67 @@ const initialState = {
         email: null,
         photoURL: null,
         emailVerified: null,
-        uid: null
-    }
-}
+        uid: null,
+    },
+};
 
 type EmailPass = {
     email: string;
     password: string;
-}
+};
 
 export const logIn = createAsyncThunk(
     'auth/logIn',
 
-    async ({email, password}: EmailPass, dispatch) => {
-        const result = await signIn({email, password});
+    async ({ email, password }: EmailPass, dispatch) => {
+        const result = await signIn({ email, password });
 
-        if (!result) { // @ts-ignore
-            dispatch(stopSubmit("signInForm", {
-                _error: "Invalid email or password",
-                email: " ",
-                password: " "
-            }));
+        if (!result) {
+            // @ts-ignore
+            dispatch(
+                stopSubmit('signInForm', {
+                    _error: 'Invalid email or password',
+                    email: ' ',
+                    password: ' ',
+                }),
+            );
         }
 
         return result as any;
-    }
+    },
 );
 
 export const signUp = createAsyncThunk(
     'auth/signUp',
 
-    async ({email, password}: EmailPass) => {
-        const signedUp = await signUpRequest({email, password});
+    async ({ email, password }: EmailPass) => {
+        const signedUp = await signUpRequest({ email, password });
 
         if (signedUp.error) {
-            if (signedUp.error.errorCode === "auth/email-already-in-use") throw new SubmissionError({
-                _error: "email already exist",
-                email: " ",
-                password: " "
-            });
+            if (signedUp.error.errorCode === 'auth/email-already-in-use')
+                throw new SubmissionError({
+                    _error: 'email already exist',
+                    email: ' ',
+                    password: ' ',
+                });
 
-            if (signedUp.error.errorCode === "auth/invalid-email") throw new SubmissionError({
-                _error: "invalid email",
-                email: " ",
-                password: " "
-            });
+            if (signedUp.error.errorCode === 'auth/invalid-email')
+                throw new SubmissionError({
+                    _error: 'invalid email',
+                    email: ' ',
+                    password: ' ',
+                });
 
-            throw new SubmissionError({_error: signedUp.error.errorCode, email: " ", password: " "});
+            throw new SubmissionError({
+                _error: signedUp.error.errorCode,
+                email: ' ',
+                password: ' ',
+            });
         }
 
         return signedUp;
-    }
-)
-
-export const loggingOut = () => (dispatch: any) => {
-    logOutRequest();
-
-    dispatch(logOut());
-}
+    },
+);
 
 const authSlice = createSlice({
     name: 'auth',
@@ -91,11 +95,11 @@ const authSlice = createSlice({
                 email: null,
                 photoURL: null,
                 emailVerified: null,
-                uid: null
-            }
+                uid: null,
+            };
         },
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder
             .addCase(logIn.pending, (state) => {
                 state.isFetchingLogIn = true;
@@ -105,11 +109,16 @@ const authSlice = createSlice({
                 state.isAuth = true;
 
                 state.authUserProfile = action.payload;
-            })
-    }
-})
+            });
+    },
+});
 
-
-export const {setAuthProfile, logOut} = authSlice.actions;
+export const { setAuthProfile, logOut } = authSlice.actions;
 
 export default authSlice.reducer;
+
+export const loggingOut = () => (dispatch: any) => {
+    logOutRequest();
+
+    dispatch(logOut());
+};
