@@ -1,21 +1,18 @@
-import {CloseSvg} from "../../assets/svg/close";
-import {connect} from "react-redux";
-import {deletePhoto} from "../../../store/photo-storage";
-import {useAppSelector} from "../../../hooks";
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { deletePhoto } from '../../../store/photo-storage';
+import { CloseSvg } from '../../assets/svg/close';
 
-const CloseSvgContainer = ({imageName, imageFirebaseId, deletePhoto}: any) => {
-    const userId = useAppSelector(state => state.auth.authUserProfile.uid);
+export default function CloseSvgContainer({ imageName, imageFirebaseId }: any) {
+    const userId = useAppSelector((state) => state.auth.authUserProfile.uid);
+    const dispatch = useAppDispatch();
 
-  const handleDeletePhoto = () => {
-    deletePhoto({imageName, imageFirebaseId, userId})
-  }
+    const handleDeletePhoto = () => {
+        dispatch(deletePhoto({ imageName, imageFirebaseId, userId }));
+    };
 
-  return (
-      <div onClick={() => handleDeletePhoto()}>
-        <CloseSvg />
-      </div>
-  )
+    return (
+        <div onClick={() => handleDeletePhoto()}>
+            <CloseSvg />
+        </div>
+    );
 }
-
-
-export default connect(null, {deletePhoto})(CloseSvgContainer)

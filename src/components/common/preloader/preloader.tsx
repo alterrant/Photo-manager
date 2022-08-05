@@ -1,12 +1,11 @@
-import PreloaderStyles from './preloader.module.css'
+import PreloaderStyles from './preloader.module.css';
 
-const Preloader = () => {
-  return (
-  <div className={PreloaderStyles.preloader}>
-    <div className={PreloaderStyles.spinner}>
-    </div>
-  </div>
-  )
+function Preloader() {
+    return (
+        <div className={PreloaderStyles.preloader}>
+            <div className={PreloaderStyles.spinner} />
+        </div>
+    );
 }
 
 export default Preloader;

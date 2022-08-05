@@ -1,29 +1,32 @@
-import {useEffect, useState} from "react";
-import {motion} from "framer-motion";
-import {connect} from "react-redux";
-import {addNewPhoto} from "../../../store/photo-storage";
-import {useAppSelector} from "../../../hooks";
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-const ProgressBar = ({file, setFile, addNewPhoto}: any) => {
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { addNewPhoto } from '../../../store/photo-storage';
 
-  const userId = useAppSelector(state => state.auth.authUserProfile.uid);
+export default function ProgressBar({ file, setFile }: any) {
+    const userId = useAppSelector((state) => state.auth.authUserProfile.uid);
+    const dispatch = useAppDispatch();
 
-  const [progress, setProgress] = useState(0);
-  const [error, setError] = useState(null);
-  const [url, setUrl] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [error, setError] = useState(null);
+    const [url, setUrl] = useState(null);
 
-  useEffect(() => {
-    addNewPhoto({userId, file, setProgress, setError, setUrl});
-  }, [file])
+    useEffect(() => {
+        dispatch(addNewPhoto({ userId, file, setProgress, setError, setUrl }));
+    }, [dispatch, userId, file]);
 
-  useEffect(() => {
-    if (url) setFile(null)
-  }, [url])
+    useEffect(() => {
+        if (url) setFile(null);
+    }, [url, setFile]);
 
-  return (<motion.div className="progress-bar"
-                      initial={{width: 0}}
-                      animate={{width: progress + '%'}}></motion.div>
-  )
+    if (!error)
+        return (
+            <motion.div
+                className='progress-bar'
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+            />
+        );
+    return <div>empty</div>;
 }
-
-export default connect(null, {addNewPhoto})(ProgressBar);

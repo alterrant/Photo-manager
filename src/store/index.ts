@@ -1,20 +1,20 @@
-import {reducer as formReducer} from "redux-form";
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
+import { reducer as formReducer } from 'redux-form';
 
-import initialiseAppReducer from "./initialise-app";
-import authReducer from "./auth";
-import photoStorageReducer from "./photo-storage";
+import authReducer from './auth';
+import initialiseAppReducer from './initialise-app';
+import photoStorageReducer from './photo-storage';
 
 const rootReducer = {
-  initialiseApp: initialiseAppReducer,
-  auth: authReducer,
-  photoStorage: photoStorageReducer,
-  form: formReducer,
-}
+    initialiseApp: initialiseAppReducer,
+    auth: authReducer,
+    photoStorage: photoStorageReducer,
+    form: formReducer,
+};
 
 export const store = configureStore({
-  reducer: rootReducer
+    reducer: rootReducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

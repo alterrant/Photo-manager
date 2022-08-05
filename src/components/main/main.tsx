@@ -1,24 +1,25 @@
-import UserPhotos from "../user-profile/user-profile";
-import CommonPhotos from "../common-photos/common-photos";
-import SwitchPhotos from "../header/switch-photos";
-import {useState} from "react";
-import {useAppSelector} from "../../hooks";
+import { useState } from 'react';
 
-const Main = () => {
+import { useAppSelector } from '../../hooks';
+import CommonPhotos from '../common-photos/common-photos';
+import SwitchPhotos from '../header/switch-photos';
+import UserPhotos from '../user-profile/user-profile';
 
-  const isLookingMyPhotos = useAppSelector(state => state.photoStorage.isLookingMyPhotos)
-  let [selectedPhoto, setSelectedPhoto] = useState(null);
-  const selectPhoto = {selectedPhoto, setSelectedPhoto};
+function Main() {
+    const isLookingMyPhotos = useAppSelector((state) => state.photoStorage.isLookingMyPhotos);
+    const [selectedPhoto, setSelectedPhoto] = useState(null);
+    const selectPhoto = { selectedPhoto, setSelectedPhoto };
 
-  return (
-      <>
-        <SwitchPhotos/>
-        {isLookingMyPhotos ?
-            <UserPhotos selectedPhoto={selectPhoto}/>
-            :
-            <CommonPhotos selectedPhoto={selectPhoto}/>}
-      </>
-  )
+    return (
+        <>
+            <SwitchPhotos />
+            {isLookingMyPhotos ? (
+                <UserPhotos selectedPhoto={selectPhoto} />
+            ) : (
+                <CommonPhotos selectedPhoto={selectPhoto} />
+            )}
+        </>
+    );
 }
 
 export default Main;
