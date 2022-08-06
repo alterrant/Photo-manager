@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import ProgressBar from './progress-bar/progress-bar';
+import { ProgressBar } from './progress-bar';
 import { SVGLoader } from '../assets/svg/loader';
 
-export function PhotoLoader() {
+export const PhotoLoader = () => {
     const [file, setFile] = useState<any>(null);
     const [error, setError] = useState<any>(null);
     const allowedTypes = ['image/png', 'image/jpeg'];
@@ -35,4 +35,4 @@ export function PhotoLoader() {
             </div>
         </>
     );
-}
+};

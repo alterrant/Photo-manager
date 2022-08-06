@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 
-import CloseSvgContainer from './close-svg-container';
+import { CloseSvgContainer } from './close-svg-container';
 import { useAppSelector } from '../../../hooks';
 
-export function Photo({ setSelectedPhoto, photos }: any) {
+export const Photo = ({ setSelectedPhoto, photos }: any) => {
     const isLookingMyPhotos = useAppSelector((state) => state.photoStorage.isLookingMyPhotos);
 
     return photos.map((item: any) => {
@@ -29,4 +29,4 @@ export function Photo({ setSelectedPhoto, photos }: any) {
             </motion.li>
         );
     });
-}
+};

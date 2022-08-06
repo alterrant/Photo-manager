@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { useFirestoreGetAllImages } from '../../hooks/useFirestore';
-import UserTitile from '../main/user-titile/user-titile';
-import { Photo } from '../photos/photo/photo';
-import { SelectedPhoto } from '../selected-photo/selected-photo';
+import { UserTitle } from '../main/user-titile';
+import { Photo } from '../photos/photo';
+import { SelectedPhoto } from '../selected-photo';
 
-function CommonPhotos({ selectedPhoto }: any) {
+export const CommonPhotos = ({ selectedPhoto }: any) => {
     const isOnePhoto = 'one-photo-grid';
     const isTwoPhoto = 'two-photo-grid';
     let styleWrapperPhotos;
@@ -28,7 +28,7 @@ function CommonPhotos({ selectedPhoto }: any) {
 
     return (
         <>
-            <UserTitile user='Common' />
+            <UserTitle user='Common' />
             <div className='common-photo-wrapper'>
                 <ul className={styleWrapperPhotos}>
                     <Photo
@@ -45,6 +45,4 @@ function CommonPhotos({ selectedPhoto }: any) {
             )}
         </>
     );
-}
-
-export default CommonPhotos;
+};

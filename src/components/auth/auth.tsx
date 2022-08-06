@@ -1,6 +1,6 @@
 import { AuthLoginList } from './auth-login-list';
 
-function Auth() {
+export const Auth = () => {
     return (
         <div className='auth-wrapper'>
             <div className='auth-container'>
@@ -10,6 +10,4 @@ function Auth() {
             </div>
         </div>
     );
-}
-
-export default Auth;
+};

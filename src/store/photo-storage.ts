@@ -6,7 +6,7 @@ import {
     snapshotCommonPhotos,
     snapshotUserPhotos,
     sortAndSerializePhotos,
-} from '../firebase/firestore';
+} from '../utils/firestore';
 
 const initialState = {
     isLookingMyPhotos: true,

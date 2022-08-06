@@ -1,15 +1,14 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Field, reduxForm } from 'redux-form';
 
-import { logInGitHub, logInGoogle } from '../../../firebase/auth';
+import { logInGitHub, logInGoogle } from '../../../utils/auth';
 import { logIn } from '../../../store/auth';
-import { inputLoginForm } from '../../common/form-control/input';
+import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
-import GitHubSVG from '../../assets/svg/github';
 import { useAppDispatch } from '../../../hooks';
+import { GitHubSVG } from '../../assets/svg/github';
 
-function SignInForm({ handleSubmit, error, signUpForm }: any) {
+const SignInForm = ({ handleSubmit, error, signUpForm }: any) => {
     const dispatch = useAppDispatch();
     const signInFunc = async ({ email, password }: any) => {
         await dispatch(logIn({ email, password }));
@@ -45,11 +44,11 @@ function SignInForm({ handleSubmit, error, signUpForm }: any) {
                 </motion.div>
             </div>
             <div className='auth-input-label'>Email</div>
-            <Field className='auth-input' component={inputLoginForm} name='email' />
+            <Field className='auth-input' component={InputLoginForm} name='email' />
             <div className='auth-input-label'>Password</div>
             <Field
                 className='auth-input'
-                component={inputLoginForm}
+                component={InputLoginForm}
                 name='password'
                 type='password'
             />
@@ -83,8 +82,10 @@ function SignInForm({ handleSubmit, error, signUpForm }: any) {
             </div>
         </form>
     );
-}
-export default reduxForm({
-    form: 'signInForm',
-    validate,
-})(SignInForm);
+};
+
+export const SignIn = () =>
+    reduxForm({
+        form: 'signInForm',
+        validate,
+    })(SignInForm);

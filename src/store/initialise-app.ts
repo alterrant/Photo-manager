@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { setAuthProfile } from './auth';
-import { createUserProfile } from '../firebase/auth';
+import { createUserProfile } from '../utils/auth';
 
 const initialState = {
     isInitialized: false,

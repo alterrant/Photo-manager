@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export function SelectedPhoto({ selectedPhoto, setSelectedPhoto }: any) {
+export const SelectedPhoto = ({ selectedPhoto, setSelectedPhoto }: any) => {
     const handleClick = (e: any) => {
         if (e.target.classList.contains('selectedPhoto-wrapper')) {
             setSelectedPhoto(null);
@@ -18,4 +18,4 @@ export function SelectedPhoto({ selectedPhoto, setSelectedPhoto }: any) {
             />
         </div>
     );
-}
+};

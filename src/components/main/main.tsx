@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { useAppSelector } from '../../hooks';
-import CommonPhotos from '../common-photos/common-photos';
-import SwitchPhotos from '../header/switch-photos';
-import UserPhotos from '../user-profile/user-profile';
+import { CommonPhotos } from '../common-photos';
+import { SwitchPhotos } from '../switch-photos';
+import { UserPhotos } from '../user-profile';
 
-function Main() {
+export const Main = () => {
     const isLookingMyPhotos = useAppSelector((state) => state.photoStorage.isLookingMyPhotos);
     const [selectedPhoto, setSelectedPhoto] = useState(null);
     const selectPhoto = { selectedPhoto, setSelectedPhoto };
@@ -20,6 +20,4 @@ function Main() {
             )}
         </>
     );
-}
-
-export default Main;
+};

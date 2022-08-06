@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
-import { projectFirestore, storage } from './config';
+import { projectFirestore, storage } from '../firebase/config';
 
 type AddUserPhotoType = {
     userId: string | number;

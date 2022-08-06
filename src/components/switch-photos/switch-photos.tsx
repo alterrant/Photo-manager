@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setStatusLookingPhotos } from '../../store/photo-storage';
-import Switch from '../common/switch/switch';
+import { Switch } from '../common/switch';
 
-function SwitchPhotos() {
+export const SwitchPhotos = () => {
     const dispatch = useAppDispatch();
     const isLookingMyPhotos = useAppSelector((state) => state.photoStorage.isLookingMyPhotos);
 
@@ -18,6 +18,4 @@ function SwitchPhotos() {
             </p>
         </div>
     );
-}
-
-export default SwitchPhotos;
+};

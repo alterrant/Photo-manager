@@ -1,15 +1,13 @@
-import Header from './components/header/header';
-import Main from './components/main/main';
+import { Header } from './components/header';
+import { Main } from './components/main';
 
 import './app.css';
 
-function App() {
+export const App = () => {
     return (
         <div className='main-wrapper'>
             <Header />
             <Main />
         </div>
     );
-}
-
-export default App;
+};

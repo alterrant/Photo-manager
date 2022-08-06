@@ -20,11 +20,11 @@ type SVGLoaderType = {
     color?: string;
 };
 
-export function SVGLoader({
+export const SVGLoader = ({
     width = '24px',
     height = '24px',
     color = 'rgb(102,102,255)',
-}: SVGLoaderType) {
+}: SVGLoaderType) => {
     const [isHovered, setHovered] = useState('rgb(102,102,255)');
 
     return (
@@ -63,4 +63,4 @@ export function SVGLoader({
             </motion.svg>
         </MotionConfig>
     );
-}
+};
