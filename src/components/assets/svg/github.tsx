@@ -1,4 +1,4 @@
-function GitHubSVG() {
+export const GitHubSVG = () => {
     return (
         <a href='https://github.com/alterrant/Photo-meneger'>
             <div className='GitHubSVG'>
@@ -27,6 +27,4 @@ function GitHubSVG() {
             </div>
         </a>
     );
-}
-
-export default GitHubSVG;
+};

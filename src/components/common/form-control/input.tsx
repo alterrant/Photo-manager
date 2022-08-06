@@ -4,7 +4,7 @@ type InputLoginFormTypes = {
     className: string;
 };
 
-export const inputLoginForm = ({ input, meta, className }: InputLoginFormTypes) => {
+export const InputLoginForm = ({ input, meta, className }: InputLoginFormTypes) => {
     const conditionError = meta.touched && meta.error;
 
     const classNameInput = `${className}${meta.active ? ' input-focused' : ''}${

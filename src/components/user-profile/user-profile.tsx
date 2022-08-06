@@ -1,12 +1,12 @@
-import UserTitile from '../main/user-titile/user-titile';
-import { PhotoLoader } from '../photo-loader/photo-loader';
-import Photos from '../photos/photos';
-import { SelectedPhoto } from '../selected-photo/selected-photo';
+import { UserTitle } from '../main/user-titile';
+import { PhotoLoader } from '../photo-loader';
+import { Photos } from '../photos';
+import { SelectedPhoto } from '../selected-photo';
 
-function UserPhotos({ selectedPhoto }: any) {
+export const UserPhotos = ({ selectedPhoto }: any) => {
     return (
         <>
-            <UserTitile />
+            <UserTitle />
             {/* <PhotoLoader fill={"#8A2BE2"} stroke={"#8A2BE2"}/> */}
             <PhotoLoader />
             <Photos setSelectedPhoto={selectedPhoto.setSelectedPhoto} />
@@ -18,6 +18,4 @@ function UserPhotos({ selectedPhoto }: any) {
             )}
         </>
     );
-}
-
-export default UserPhotos;
+};

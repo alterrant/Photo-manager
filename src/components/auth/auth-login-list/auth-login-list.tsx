@@ -1,14 +1,14 @@
 import { useReducer } from 'react';
 
-import SignIn from './sign-in/sign-in';
-import SignUp from './sign-up/sign-up';
+import { SignIn } from '../sign-in';
+import { SignUp } from '../sign-up';
 import reducerLoginList, {
     initialState,
     setEmailPassLogin,
     setSignUp,
-} from '../../store/auth-login-list';
+} from '../../../store/auth-login-list';
 
-export function AuthLoginList() {
+export const AuthLoginList = () => {
     const [state, dispatch] = useReducer(reducerLoginList, initialState);
     const signInForm = () => dispatch(setEmailPassLogin());
     const signUpForm = () => dispatch(setSignUp());
@@ -23,4 +23,4 @@ export function AuthLoginList() {
             // @ts-ignore
             return <SignUp signInForm={signInForm} />;
     }
-}
+};

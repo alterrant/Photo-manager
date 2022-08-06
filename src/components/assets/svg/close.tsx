@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export function CloseSvg() {
+export const CloseSvg = () => {
     return (
         <motion.svg
             className='delete-picture'
@@ -99,4 +99,4 @@ export function CloseSvg() {
             </g>
         </motion.svg>
     );
-}
+};

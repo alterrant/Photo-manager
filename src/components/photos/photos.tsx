@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Photo } from './photo/photo';
+import { Photo } from './photo';
 import { useFirestoreGetUserImages } from '../../hooks/useFirestore';
 
-function Photos(props: any) {
+export const Photos = (props: any) => {
     const isOnePhoto = 'one-photo-grid';
     const isTwoPhoto = 'two-photo-grid';
     let styleWrapperPhotos;
@@ -31,6 +31,4 @@ function Photos(props: any) {
             </ul>
         </div>
     );
-}
-
-export default Photos;
+};

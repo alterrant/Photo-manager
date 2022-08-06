@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
-import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 import { signUp } from '../../../store/auth';
-import { inputLoginForm } from '../../common/form-control/input';
+import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
 import { useAppDispatch } from '../../../hooks';
 
-function SignUpForm({ handleSubmit, signInForm, error }: any) {
+const SignUpForm = ({ handleSubmit, signInForm, error }: any) => {
     const dispatch = useAppDispatch();
     return (
         <form
@@ -16,18 +15,18 @@ function SignUpForm({ handleSubmit, signInForm, error }: any) {
         >
             <span className='auth-form-title'>Sign up</span>
             <div className='auth-input-label'>Username</div>
-            <Field className='auth-input' component={inputLoginForm} name='email' />
+            <Field className='auth-input' component={InputLoginForm} name='email' />
             <div className='auth-input-label'>Password</div>
             <Field
                 className='auth-input'
-                component={inputLoginForm}
+                component={InputLoginForm}
                 name='password'
                 type='password'
             />
             <div className='auth-input-label'>Repeat password</div>
             <Field
                 className='auth-input'
-                component={inputLoginForm}
+                component={InputLoginForm}
                 name='repeatedPassword'
                 type='password'
             />
@@ -62,8 +61,10 @@ function SignUpForm({ handleSubmit, signInForm, error }: any) {
             </div>
         </form>
     );
-}
-export default reduxForm({
-    form: 'signUpForm',
-    validate,
-})(SignUpForm);
+};
+
+export const SignUp = () =>
+    reduxForm({
+        form: 'signUpForm',
+        validate,
+    })(SignUpForm);

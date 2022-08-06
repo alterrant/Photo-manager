@@ -1,6 +1,6 @@
 import SwitchStyle from './switch.module.css';
 
-function Switch({ isOn, handleToggle, onColor }: any) {
+export const Switch = ({ isOn, handleToggle, onColor }: any) => {
     return (
         <>
             <input
@@ -19,6 +19,4 @@ function Switch({ isOn, handleToggle, onColor }: any) {
             </label>
         </>
     );
-}
-
-export default Switch;
+};

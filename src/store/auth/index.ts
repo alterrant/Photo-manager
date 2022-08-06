@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { stopSubmit, SubmissionError } from 'redux-form';
 
-import { logOutRequest, signIn, signUpRequest } from '../../firebase/auth';
+import { logOutRequest, signIn, signUpRequest } from '../../utils/auth';
 
 const initialState = {
     isAuth: false,

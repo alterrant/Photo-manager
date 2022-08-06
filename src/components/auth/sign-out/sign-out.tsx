@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { loggingOut } from '../../../store/auth';
 
-function LogOut() {
+export const SignOut = () => {
     const dispatch = useDispatch();
 
     return (
@@ -20,6 +20,4 @@ function LogOut() {
             </motion.button>
         </div>
     );
-}
-
-export default LogOut;
+};

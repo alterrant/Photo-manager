@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { addNewPhoto } from '../../../store/photo-storage';
 
-export default function ProgressBar({ file, setFile }: any) {
+export const ProgressBar = ({ file, setFile }: any) => {
     const userId = useAppSelector((state) => state.auth.authUserProfile.uid);
     const dispatch = useAppDispatch();
 
@@ -29,4 +29,4 @@ export default function ProgressBar({ file, setFile }: any) {
             />
         );
     return <div>empty</div>;
-}
+};

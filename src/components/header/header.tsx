@@ -1,13 +1,11 @@
-import GitHubSVG from '../assets/svg/github';
-import LogOut from '../auth/sign-out/sign-out';
+import { GitHubSVG } from '../assets/svg/github';
+import { SignOut } from '../auth/sign-out';
 
-function Header() {
+export const Header = () => {
     return (
         <header>
             <GitHubSVG />
-            <LogOut />
+            <SignOut />
         </header>
     );
-}
-
-export default Header;
+};
