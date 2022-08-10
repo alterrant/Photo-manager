@@ -1,124 +1,61 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { stopSubmit, SubmissionError } from 'redux-form';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { EmailPass } from './types';
 
-import { logOutRequest, signIn, signUpRequest } from '../../utils/auth';
+export type AuthStateTypes = {
+    isAuth: boolean;
+    isLoading: boolean;
+    errorMessage: string;
+    authUserProfile: AuthUserProfileTypes;
+};
 
-const initialState = {
+export type AuthUserProfileTypes = {
+    uid: string;
+    [name: string]: string;
+};
+
+type LogInError = string;
+
+const defaultUserProfile = {
+    uid: '',
+};
+
+const initialState: AuthStateTypes = {
     isAuth: false,
-    isFetchingLogIn: false,
-    isFetchingLogOut: false,
-
-    authUserProfile: {
-        displayName: null,
-        email: null,
-        photoURL: null,
-        emailVerified: null,
-        uid: null,
-    },
+    isLoading: false,
+    errorMessage: '',
+    authUserProfile: defaultUserProfile,
 };
-
-type EmailPass = {
-    email: string;
-    password: string;
-};
-
-export const logIn = createAsyncThunk(
-    'auth/logIn',
-
-    async ({ email, password }: EmailPass, dispatch) => {
-        const result = await signIn({ email, password });
-
-        if (!result) {
-            // @ts-ignore
-            dispatch(
-                stopSubmit('signInForm', {
-                    _error: 'Invalid email or password',
-                    email: ' ',
-                    password: ' ',
-                }),
-            );
-        }
-
-        return result as any;
-    },
-);
-
-export const signUp = createAsyncThunk(
-    'auth/signUp',
-
-    async ({ email, password }: EmailPass) => {
-        const signedUp = await signUpRequest({ email, password });
-
-        if (signedUp.error) {
-            if (signedUp.error.errorCode === 'auth/email-already-in-use')
-                throw new SubmissionError({
-                    _error: 'email already exist',
-                    email: ' ',
-                    password: ' ',
-                });
-
-            if (signedUp.error.errorCode === 'auth/invalid-email')
-                throw new SubmissionError({
-                    _error: 'invalid email',
-                    email: ' ',
-                    password: ' ',
-                });
-
-            throw new SubmissionError({
-                _error: signedUp.error.errorCode,
-                email: ' ',
-                password: ' ',
-            });
-        }
-
-        return signedUp;
-    },
-);
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAuthProfile(state, action) {
-            if (action.payload) {
-                state.isAuth = true;
-
-                state.authUserProfile = action.payload;
-            }
-        },
-        logOut(state) {
-            state.isFetchingLogOut = false;
+        logInAttempt: (state, action: PayloadAction<EmailPass>) => {
             state.isAuth = false;
-
-            state.authUserProfile = {
-                displayName: null,
-                email: null,
-                photoURL: null,
-                emailVerified: null,
-                uid: null,
-            };
+            state.isLoading = true;
+            state.errorMessage = '';
+            state.authUserProfile = defaultUserProfile;
         },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(logIn.pending, (state) => {
-                state.isFetchingLogIn = true;
-            })
-            .addCase(logIn.fulfilled, (state, action) => {
-                state.isFetchingLogIn = false;
-                state.isAuth = true;
-
-                state.authUserProfile = action.payload;
-            });
+        logInSuccess: (state, action: PayloadAction<AuthUserProfileTypes>) => {
+            state.isAuth = true;
+            state.isLoading = false;
+            state.errorMessage = '';
+            state.authUserProfile = action.payload;
+        },
+        loginError: (state, action: PayloadAction<LogInError>) => {
+            state.isAuth = false;
+            state.isLoading = false;
+            state.errorMessage = action.payload;
+            state.authUserProfile = defaultUserProfile;
+        },
+        logOut: (state) => {
+            state.isAuth = false;
+            state.isLoading = false;
+            state.errorMessage = '';
+            state.authUserProfile = defaultUserProfile;
+        },
     },
 });
 
-export const { setAuthProfile, logOut } = authSlice.actions;
-
-export default authSlice.reducer;
-
-export const loggingOut = () => (dispatch: any) => {
-    logOutRequest();
-
-    dispatch(logOut());
-};
+export const { logInAttempt, logInSuccess, loginError, logOut } = authSlice.actions;
+export const authReducer = authSlice.reducer;

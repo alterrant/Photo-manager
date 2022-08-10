@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Photo } from './photo';
-import { useFirestoreGetUserImages } from '../../hooks/useFirestore';
+import { useFirestoreGetUserPhotos } from '../../hooks/useFirestore';
 
 export const Photos = (props: any) => {
     const isOnePhoto = 'one-photo-grid';
     const isTwoPhoto = 'two-photo-grid';
     let styleWrapperPhotos;
 
-    const [userPhotos] = useFirestoreGetUserImages();
+    const userPhotos = useFirestoreGetUserPhotos();
 
     switch (userPhotos && userPhotos.length) {
         case 1:

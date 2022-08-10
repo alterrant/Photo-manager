@@ -1,31 +1,28 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 
-import { App } from './app';
-import { Auth } from './components/auth';
-import { Preloader } from './components/common/preloader';
-import { useAppDispatch, useAppSelector } from './hooks';
-import { initialize } from './store/initialise-app';
+import { App } from '../../pages/main';
+import { Auth } from '../auth';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logInSuccess, logOut } from '../../store/auth';
 
-import './app.css';
+import '../../pages/main/app.css';
 
 export const AppContainer = () => {
     const dispatch = useAppDispatch();
     const isAuth: boolean = useAppSelector((state) => state.auth.isAuth);
-    const isInit = useAppSelector((state) => state.initialiseApp.isInitialized);
 
     useEffect(() => {
         const auth = getAuth();
+
         onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
-                dispatch(initialize(currentUser));
+                dispatch(logInSuccess(currentUser as any));
             } else {
-                dispatch(initialize());
+                dispatch(logOut());
             }
         });
     }, [dispatch]);
-
-    if (!isInit) return <Preloader />;
 
     return isAuth ? <App /> : <Auth />;
 };

@@ -1,17 +1,21 @@
 import { motion } from 'framer-motion';
 import { Field, reduxForm } from 'redux-form';
 
-import { signUp } from '../../../store/auth';
 import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
 import { useAppDispatch } from '../../../hooks';
+import { sendRegistrationRequest } from '../../../store/registration';
+import { RegistrationRequestTypes } from '../../../store/registration/types';
 
-const SignUpForm = ({ handleSubmit, signInForm, error }: any) => {
+const SignUpForm = ({ handleSubmit, setRegistrationPage, error }: any) => {
     const dispatch = useAppDispatch();
+
     return (
         <form
             className='auth-form-container'
-            onSubmit={handleSubmit((inputValues: any) => dispatch(signUp(inputValues)))}
+            onSubmit={handleSubmit((inputValues: RegistrationRequestTypes) =>
+                dispatch(sendRegistrationRequest(inputValues)),
+            )}
         >
             <span className='auth-form-title'>Sign up</span>
             <div className='auth-input-label'>Username</div>
@@ -52,7 +56,7 @@ const SignUpForm = ({ handleSubmit, signInForm, error }: any) => {
                     If a member,{' '}
                     <motion.span
                         className='auth-text-link'
-                        onClick={signInForm}
+                        onClick={() => setRegistrationPage(false)}
                         whileHover={{ color: 'rgb(78,65,113)' }}
                     >
                         sign in
@@ -68,3 +72,8 @@ export const SignUp = () =>
         form: 'signUpForm',
         validate,
     })(SignUpForm);
+
+export default reduxForm({
+    form: 'signUpForm',
+    validate,
+})(SignUpForm);

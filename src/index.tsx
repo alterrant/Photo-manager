@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { AppContainer } from './app-container';
+import { AppContainer } from './components/app-container';
 import { store } from './store';
 
 import './index.css';

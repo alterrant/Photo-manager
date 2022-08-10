@@ -2,38 +2,62 @@ import { useEffect, useState } from 'react';
 
 import {
     subscribeCommonPhotos,
-    subscribeUserPhotos,
     unsubscribeCommonPhotos,
+    subscribeUserPhotos,
     unsubscribeUserPhotos,
+    setPhotos,
 } from '../store/photo-storage';
 import { useAppDispatch, useAppSelector } from './index';
+import { auth, photoStorage } from '../selectors';
+import { PhotoType } from '../store/photo-storage/types';
 
-export const useFirestoreGetUserImages = () => {
+const useDispatchStatePhotos = (statePhotos: PhotoType) => {
     const dispatch = useAppDispatch();
-    const userPhotos = useAppSelector((state) => state.photoStorage.userPhotos);
-    const authUserId = useAppSelector((state) => state.auth.authUserProfile.uid);
-
-    const [urlImages, setUrlImages] = useState([]);
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    const user = `user_${authUserId}`;
 
     useEffect(() => {
-        dispatch(subscribeUserPhotos({ user, setUrlImages, urlImages }));
-        return () => dispatch(unsubscribeUserPhotos(user));
-    }, [user, dispatch, urlImages]);
-
-    return [userPhotos];
+        dispatch(setPhotos(statePhotos));
+    }, [dispatch, statePhotos]);
 };
 
-export const useFirestoreGetAllImages = () => {
+const usePhotos = () => {
     const dispatch = useAppDispatch();
-    const commonPhotos = useAppSelector((state) => state.photoStorage.commonPhotos);
-    const [urlImages, setUrlImages] = useState([]);
+    const { photos } = useAppSelector(photoStorage);
+    const [statePhotos, setStatePhotos] = useState<PhotoType>([]);
+
+    return { dispatch, photos, statePhotos, setStatePhotos };
+};
+
+export const useFirestoreGetCommonPhotos = () => {
+    const { dispatch, photos, statePhotos, setStatePhotos } = usePhotos();
+    const path = `common_photos`;
 
     useEffect(() => {
-        dispatch(subscribeCommonPhotos({ setUrlImages, urlImages }));
-        return () => dispatch(unsubscribeCommonPhotos());
-    }, [dispatch, urlImages]);
+        dispatch(subscribeCommonPhotos({ path, setStatePhotos, goal: 'subscribe' }));
 
-    return [commonPhotos];
+        return () => {
+            dispatch(unsubscribeCommonPhotos({ path, setStatePhotos, goal: 'unsubscribe' }));
+        };
+    }, [dispatch, setStatePhotos, path]);
+
+    useDispatchStatePhotos(statePhotos);
+
+    return photos;
+};
+
+export const useFirestoreGetUserPhotos = () => {
+    const { dispatch, photos, statePhotos, setStatePhotos } = usePhotos();
+    const { authUserProfile } = useAppSelector(auth);
+    const path = `user_${authUserProfile.uid}`;
+
+    useEffect(() => {
+        dispatch(subscribeUserPhotos({ path, setStatePhotos }));
+
+        return () => {
+            dispatch(unsubscribeUserPhotos({ path, setStatePhotos }));
+        };
+    }, [path, dispatch, setStatePhotos]);
+
+    useDispatchStatePhotos(statePhotos);
+
+    return photos;
 };

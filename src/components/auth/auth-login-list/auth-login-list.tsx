@@ -1,26 +1,16 @@
-import { useReducer } from 'react';
+import { useState } from 'react';
 
-import { SignIn } from '../sign-in';
-import { SignUp } from '../sign-up';
-import reducerLoginList, {
-    initialState,
-    setEmailPassLogin,
-    setSignUp,
-} from '../../../store/auth-login-list';
+import SignInForm from '../sign-in/sign-in';
+
+import SignUpForm from '../sign-up/sign-up';
 
 export const AuthLoginList = () => {
-    const [state, dispatch] = useReducer(reducerLoginList, initialState);
-    const signInForm = () => dispatch(setEmailPassLogin());
-    const signUpForm = () => dispatch(setSignUp());
-    switch (state.authLogin) {
-        case 'signUp':
-            // @ts-ignore
-            return <SignUp signInForm={signInForm} />;
-        case 'signInEmailPass':
-            // @ts-ignore
-            return <SignIn signUpForm={signUpForm} />;
-        default:
-            // @ts-ignore
-            return <SignUp signInForm={signInForm} />;
+    const [isRegistrationPage, setRegistrationPage] = useState<boolean>(false);
+
+    if (isRegistrationPage) {
+        // @ts-ignore
+        return <SignUpForm setRegistrationPage={setRegistrationPage} />;
     }
+    // @ts-ignore
+    return <SignInForm setRegistrationPage={setRegistrationPage} />;
 };
