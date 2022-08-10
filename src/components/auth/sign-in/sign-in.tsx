@@ -2,20 +2,22 @@ import { motion } from 'framer-motion';
 import { Field, reduxForm } from 'redux-form';
 
 import { logInGitHub, logInGoogle } from '../../../utils/auth';
-import { logIn } from '../../../store/auth';
+import { logInAttempt } from '../../../store/auth';
 import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
 import { useAppDispatch } from '../../../hooks';
+import { EmailPass } from '../../../store/auth/types';
 import { GitHubSVG } from '../../assets/svg/github';
 
-const SignInForm = ({ handleSubmit, error, signUpForm }: any) => {
+const SignInForm = ({ handleSubmit, error, setRegistrationPage }: any) => {
     const dispatch = useAppDispatch();
-    const signInFunc = async ({ email, password }: any) => {
-        await dispatch(logIn({ email, password }));
+
+    const signInHandler = ({ email, password }: EmailPass) => {
+        dispatch(logInAttempt({ email, password }));
     };
 
     return (
-        <form className='auth-form-container' onSubmit={handleSubmit(signInFunc)}>
+        <form className='auth-form-container' onSubmit={handleSubmit(signInHandler)}>
             <span className='auth-form-title'>Sign In With</span>
 
             <div className='login-button-wrapper'>
@@ -73,7 +75,7 @@ const SignInForm = ({ handleSubmit, error, signUpForm }: any) => {
                     Not a member?{' '}
                     <motion.span
                         className='auth-text-link'
-                        onClick={signUpForm}
+                        onClick={() => setRegistrationPage(true)}
                         whileHover={{ color: 'rgb(78,65,113)' }}
                     >
                         Sign up now
@@ -89,3 +91,8 @@ export const SignIn = () =>
         form: 'signInForm',
         validate,
     })(SignInForm);
+
+export default reduxForm({
+    form: 'signInForm',
+    validate,
+})(SignInForm);

@@ -2,10 +2,12 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { addNewPhoto } from '../../../store/photo-storage';
+import { addPhotoAttempt } from '../../../store/photo-storage';
+import { auth } from '../../../selectors';
 
 export const ProgressBar = ({ file, setFile }: any) => {
-    const userId = useAppSelector((state) => state.auth.authUserProfile.uid);
+    const { uid } = useAppSelector(auth).authUserProfile;
+    const userId = uid;
     const dispatch = useAppDispatch();
 
     const [progress, setProgress] = useState(0);
@@ -13,7 +15,7 @@ export const ProgressBar = ({ file, setFile }: any) => {
     const [url, setUrl] = useState(null);
 
     useEffect(() => {
-        dispatch(addNewPhoto({ userId, file, setProgress, setError, setUrl }));
+        dispatch(addPhotoAttempt({ userId, file, setProgress, setError, setUrl }));
     }, [dispatch, userId, file]);
 
     useEffect(() => {
