@@ -10,6 +10,7 @@ import {
 import { useAppDispatch, useAppSelector } from './index';
 import { auth, photoStorage } from '../selectors';
 import { PhotoType } from '../store/photo-storage/types';
+import { DOC_PATH } from '../store/photo-storage/constants';
 
 const useDispatchStatePhotos = (statePhotos: PhotoType) => {
     const dispatch = useAppDispatch();
@@ -29,13 +30,13 @@ const usePhotos = () => {
 
 export const useFirestoreGetCommonPhotos = () => {
     const { dispatch, photos, statePhotos, setStatePhotos } = usePhotos();
-    const path = `common_photos`;
+    const path = DOC_PATH.getCommonPath();
 
     useEffect(() => {
-        dispatch(subscribeCommonPhotos({ path, setStatePhotos, goal: 'subscribe' }));
+        dispatch(subscribeCommonPhotos({ path, setStatePhotos }));
 
         return () => {
-            dispatch(unsubscribeCommonPhotos({ path, setStatePhotos, goal: 'unsubscribe' }));
+            dispatch(unsubscribeCommonPhotos({ path, setStatePhotos }));
         };
     }, [dispatch, setStatePhotos, path]);
 
@@ -47,7 +48,7 @@ export const useFirestoreGetCommonPhotos = () => {
 export const useFirestoreGetUserPhotos = () => {
     const { dispatch, photos, statePhotos, setStatePhotos } = usePhotos();
     const { authUserProfile } = useAppSelector(auth);
-    const path = `user_${authUserProfile.uid}`;
+    const path = DOC_PATH.getUserPath(authUserProfile.uid);
 
     useEffect(() => {
         dispatch(subscribeUserPhotos({ path, setStatePhotos }));

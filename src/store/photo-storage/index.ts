@@ -1,29 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AddUserPhotoType, DeleteUserPhotoType, PhotoType } from './types';
-
-export type PhotoStorageStateTypes = {
-    isLoading: boolean;
-    isSuccess: boolean;
-    isError: boolean;
-    errorMessage: string;
-    isDeleting: boolean;
-    isDeletingSuccess: boolean;
-    isDeletingError: boolean;
-    deletingErrorMessage: string;
-
-    isSubscribedUserPhotos: boolean;
-    isSubscribedCommonPhotos: boolean;
-    photos: PhotoType;
-
-    [name: string]: any;
-};
+import {
+    AddUserPhotoType,
+    DeleteUserPhotoType,
+    FirestoreSubscribeTypes,
+    PhotoStorageStateTypes,
+    PhotoType,
+} from './types';
 
 const initialState: PhotoStorageStateTypes = {
     isLoading: false,
     isSuccess: false,
     isError: false,
     errorMessage: '',
+
     isDeleting: false,
     isDeletingSuccess: false,
     isDeletingError: false,
@@ -32,14 +22,6 @@ const initialState: PhotoStorageStateTypes = {
     isSubscribedUserPhotos: false,
     isSubscribedCommonPhotos: false,
     photos: [],
-
-    isLookingMyPhotos: true,
-    isLoadingNewPhoto: false,
-    isLoadingUserPhotos: false,
-    isLoadingCommonPhotos: false,
-    isDeletingPhoto: false,
-    userPhotos: [],
-    commonPhotos: [],
 };
 
 const photoStorageSlice = createSlice({
@@ -82,30 +64,25 @@ const photoStorageSlice = createSlice({
             state.isDeletingError = true;
             state.deletingErrorMessage = action.payload;
         },
-        subscribeUserPhotos: (state, action: PayloadAction<any>) => {
+        subscribeUserPhotos: (state, action: PayloadAction<FirestoreSubscribeTypes>) => {
             state.isSubscribedUserPhotos = true;
         },
-        unsubscribeUserPhotos: (state, action: PayloadAction<any>) => {
-            state.isSubscribedUserPhotos = false;
-        },
-        subscribeCommonPhotos: (state, action: PayloadAction<any>) => {
+        subscribeCommonPhotos: (state, action: PayloadAction<FirestoreSubscribeTypes>) => {
             state.isSubscribedCommonPhotos = true;
         },
-        unsubscribeCommonPhotos: (state, action: PayloadAction<any>) => {
+        unsubscribeUserPhotos: (state, action: PayloadAction<FirestoreSubscribeTypes>) => {
+            state.isSubscribedUserPhotos = false;
+        },
+        unsubscribeCommonPhotos: (state, action: PayloadAction<FirestoreSubscribeTypes>) => {
             state.isSubscribedCommonPhotos = false;
         },
         setPhotos: (state, action: PayloadAction<PhotoType>) => {
             state.photos = action.payload;
         },
-
-        setStatusLookingPhotos(state) {
-            state.isLookingMyPhotos = !state.isLookingMyPhotos;
-        },
     },
 });
 
 export const {
-    setStatusLookingPhotos,
     addPhotoAttempt,
     addPhotoSuccess,
     addPhotoError,

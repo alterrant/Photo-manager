@@ -1,8 +1,8 @@
+import { WrappedFieldProps } from 'redux-form';
+
 type InputLoginFormTypes = {
-    input: any;
-    meta: any;
     className: string;
-};
+} & WrappedFieldProps;
 
 export const InputLoginForm = ({ input, meta, className }: InputLoginFormTypes) => {
     const conditionError = meta.touched && meta.error;

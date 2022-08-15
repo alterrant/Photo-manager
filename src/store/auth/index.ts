@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmailPass } from './types';
+import { UserInfo } from '@firebase/auth';
+import { EmailPass, OAuthService } from './types';
 
 export type AuthStateTypes = {
     isAuth: boolean;
@@ -8,14 +9,16 @@ export type AuthStateTypes = {
     authUserProfile: AuthUserProfileTypes;
 };
 
-export type AuthUserProfileTypes = {
-    uid: string;
-    [name: string]: string;
-};
+export type AuthUserProfileTypes = UserInfo;
 
 type LogInError = string;
 
 const defaultUserProfile = {
+    providerId: '',
+    photoURL: '',
+    phoneNumber: '',
+    email: '',
+    displayName: '',
     uid: '',
 };
 
@@ -36,13 +39,30 @@ const authSlice = createSlice({
             state.errorMessage = '';
             state.authUserProfile = defaultUserProfile;
         },
-        logInSuccess: (state, action: PayloadAction<AuthUserProfileTypes>) => {
+        logInSuccess: (state, action: PayloadAction<UserInfo>) => {
             state.isAuth = true;
             state.isLoading = false;
             state.errorMessage = '';
             state.authUserProfile = action.payload;
         },
         loginError: (state, action: PayloadAction<LogInError>) => {
+            state.isAuth = false;
+            state.isLoading = false;
+            state.errorMessage = action.payload;
+            state.authUserProfile = defaultUserProfile;
+        },
+        OAuthLoginAttempt: (state, action: PayloadAction<OAuthService>) => {
+            state.isAuth = false;
+            state.isLoading = false;
+            state.errorMessage = '';
+            state.authUserProfile = defaultUserProfile;
+        },
+        OAuthLoginSuccess: (state) => {
+            state.isAuth = true;
+            state.isLoading = false;
+            state.errorMessage = '';
+        },
+        OAuthLoginError: (state, action: PayloadAction<LogInError>) => {
             state.isAuth = false;
             state.isLoading = false;
             state.errorMessage = action.payload;
@@ -57,5 +77,13 @@ const authSlice = createSlice({
     },
 });
 
-export const { logInAttempt, logInSuccess, loginError, logOut } = authSlice.actions;
+export const {
+    logInAttempt,
+    logInSuccess,
+    loginError,
+    OAuthLoginAttempt,
+    OAuthLoginSuccess,
+    OAuthLoginError,
+    logOut,
+} = authSlice.actions;
 export const authReducer = authSlice.reducer;

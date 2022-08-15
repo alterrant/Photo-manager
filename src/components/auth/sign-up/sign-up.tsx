@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { Dispatch, FC, SetStateAction } from 'react';
 
 import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
@@ -7,16 +8,20 @@ import { useAppDispatch } from '../../../hooks';
 import { sendRegistrationRequest } from '../../../store/registration';
 import { RegistrationRequestTypes } from '../../../store/registration/types';
 
-const SignUpForm = ({ handleSubmit, setRegistrationPage, error }: any) => {
+type SignUpFormPropsTypes = {
+    setRegistrationPage: Dispatch<SetStateAction<boolean>>;
+};
+
+const SignUpForm: FC<
+    InjectedFormProps<RegistrationRequestTypes, SignUpFormPropsTypes> & SignUpFormPropsTypes
+> = ({ handleSubmit, setRegistrationPage, error }) => {
     const dispatch = useAppDispatch();
+    const signUpHandler = ({ email, password }: RegistrationRequestTypes) => {
+        dispatch(sendRegistrationRequest({ email, password }));
+    };
 
     return (
-        <form
-            className='auth-form-container'
-            onSubmit={handleSubmit((inputValues: RegistrationRequestTypes) =>
-                dispatch(sendRegistrationRequest(inputValues)),
-            )}
-        >
+        <form className='auth-form-container' onSubmit={handleSubmit(signUpHandler)}>
             <span className='auth-form-title'>Sign up</span>
             <div className='auth-input-label'>Username</div>
             <Field className='auth-input' component={InputLoginForm} name='email' />
@@ -68,12 +73,12 @@ const SignUpForm = ({ handleSubmit, setRegistrationPage, error }: any) => {
 };
 
 export const SignUp = () =>
-    reduxForm({
+    reduxForm<RegistrationRequestTypes, SignUpFormPropsTypes>({
         form: 'signUpForm',
         validate,
     })(SignUpForm);
 
-export default reduxForm({
+export default reduxForm<RegistrationRequestTypes, SignUpFormPropsTypes>({
     form: 'signUpForm',
     validate,
 })(SignUpForm);

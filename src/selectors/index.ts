@@ -1,6 +1,6 @@
 import { RootState } from '../store';
 import { AuthStateTypes } from '../store/auth';
-import { PhotoStorageStateTypes } from '../store/photo-storage';
+import { PhotoStorageStateTypes } from '../store/photo-storage/types';
 
 export const auth = (store: RootState): AuthStateTypes => store.auth;
 export const form = (store: RootState) => store.form;

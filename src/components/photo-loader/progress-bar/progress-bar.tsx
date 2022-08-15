@@ -1,18 +1,24 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { addPhotoAttempt } from '../../../store/photo-storage';
 import { auth } from '../../../selectors';
+import { SetErrorType, SetProgressType, SetUrlType } from '../../../store/photo-storage/types';
 
-export const ProgressBar = ({ file, setFile }: any) => {
+type ProgressBarTypes = {
+    file: File;
+    setFile: Dispatch<SetStateAction<File | null>>;
+};
+
+export const ProgressBar = ({ file, setFile }: ProgressBarTypes) => {
     const { uid } = useAppSelector(auth).authUserProfile;
     const userId = uid;
     const dispatch = useAppDispatch();
 
-    const [progress, setProgress] = useState(0);
-    const [error, setError] = useState(null);
-    const [url, setUrl] = useState(null);
+    const [progress, setProgress] = useState<SetProgressType>(0);
+    const [error, setError] = useState<SetErrorType>(null);
+    const [url, setUrl] = useState<SetUrlType>(null);
 
     useEffect(() => {
         dispatch(addPhotoAttempt({ userId, file, setProgress, setError, setUrl }));
