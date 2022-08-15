@@ -1,22 +1,56 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export type UserPhotoTypes = any;
-
-export type UserIdTypes = string | number;
+export type UserIdTypes = string;
+export type SetProgressType = number;
+export type SetErrorType = string | null;
+export type SetUrlType = string | null;
 
 export type AddUserPhotoType = {
     userId: UserIdTypes;
-    file: UserPhotoTypes;
-    setProgress: any;
-    setError: any;
-    setUrl: any;
+    file: File;
+    setProgress: Dispatch<SetStateAction<SetProgressType>>;
+    setError: Dispatch<SetStateAction<SetErrorType>>;
+    setUrl: Dispatch<SetStateAction<SetUrlType>>;
 };
 
 export type DeleteUserPhotoType = {
-    userId: string | number;
+    userId: string;
     imageName: string;
-    imageFirebaseId: string | number;
+    imageFirebaseId: string;
 };
 
-export type PhotoType = Record<string, string>[];
-export type SetCommonPhotoType = Dispatch<SetStateAction<PhotoType>>;
+export type FirestoreSubscribeTypes = {
+    path: string;
+    setStatePhotos: Dispatch<SetStateAction<PhotoType>>;
+};
+
+export type PhotoType = SnapshotPhotos[];
+
+export type SnapshotPhotos = {
+    addedTime: { nanoseconds: number; seconds: number };
+    id: string;
+    imageUrl: string;
+    name: string;
+};
+
+export type PhotoStorageStateTypes = AddPhotoTypes & DeletePhotoTypes & SubscribeFirestoreTypes;
+
+type AddPhotoTypes = {
+    isLoading: boolean;
+    isSuccess: boolean;
+    isError: boolean;
+    errorMessage: string;
+};
+
+type DeletePhotoTypes = {
+    isDeleting: boolean;
+    isDeletingSuccess: boolean;
+    isDeletingError: boolean;
+    deletingErrorMessage: string;
+};
+
+type SubscribeFirestoreTypes = {
+    isSubscribedUserPhotos: boolean;
+    isSubscribedCommonPhotos: boolean;
+    photos: PhotoType;
+};

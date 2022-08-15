@@ -1,8 +1,9 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { FirestoreError } from '@firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { EmailPass } from '../auth/types';
 
+import { EmailPass } from '../auth/types';
 import { sendRegistrationRequest, registrationSuccess, registrationError } from '.';
 
 function* signUpWorker({ payload }: PayloadAction<EmailPass>) {
@@ -11,11 +12,12 @@ function* signUpWorker({ payload }: PayloadAction<EmailPass>) {
 
         yield call(createUserWithEmailAndPassword, auth, payload.email, payload.password);
         yield put(registrationSuccess());
-    } catch (error: any) {
-        if (error.errorCode === 'auth/email-already-in-use')
-            put(registrationError('email already exist'));
-        else if (error.errorCode === 'auth/invalid-email') put(registrationError('invalid email'));
-        else put(registrationError(error.errorMessage));
+    } catch (e: unknown) {
+        if (e instanceof FirestoreError) {
+            if (e.code === 'already-exists') put(registrationError('email already exist'));
+            else if (e.code === 'invalid-argument') put(registrationError('invalid email'));
+            else put(registrationError(e.message));
+        }
     }
 }
 

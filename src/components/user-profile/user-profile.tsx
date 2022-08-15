@@ -2,18 +2,27 @@ import { UserTitle } from '../main/user-titile';
 import { PhotoLoader } from '../photo-loader';
 import { Photos } from '../photos';
 import { SelectedPhoto } from '../selected-photo';
+import { SelectPhotoType } from '../main/main';
 
-export const UserPhotos = ({ selectedPhoto }: any) => {
+type UserProfileType = {
+    selectPhoto: SelectPhotoType;
+    isLookingMyPhotos: boolean;
+};
+
+export const UserPhotos = ({ selectPhoto, isLookingMyPhotos }: UserProfileType) => {
     return (
         <>
             <UserTitle />
             {/* <PhotoLoader fill={"#8A2BE2"} stroke={"#8A2BE2"}/> */}
             <PhotoLoader />
-            <Photos setSelectedPhoto={selectedPhoto.setSelectedPhoto} />
-            {selectedPhoto.selectedPhoto && (
+            <Photos
+                setSelectedPhoto={selectPhoto.setSelectedPhoto}
+                isLookingMyPhotos={isLookingMyPhotos}
+            />
+            {selectPhoto.selectedPhotoUrl && (
                 <SelectedPhoto
-                    selectedPhoto={selectedPhoto.selectedPhoto}
-                    setSelectedPhoto={selectedPhoto.setSelectedPhoto}
+                    selectedPhotoUrl={selectPhoto.selectedPhotoUrl}
+                    setSelectedPhoto={selectPhoto.setSelectedPhoto}
                 />
             )}
         </>

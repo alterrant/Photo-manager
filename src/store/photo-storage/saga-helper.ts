@@ -1,13 +1,15 @@
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { FirestoreError } from '@firebase/firestore';
 import { onSnapshot, addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { StorageError, UploadTaskSnapshot } from '@firebase/storage';
+import { UploadTaskSnapshot } from '@firebase/storage';
 import { projectFirestore, storage } from '../../firebase/config';
-import { AddUserPhotoType, SetCommonPhotoType } from './types';
+import { AddUserPhotoType, FirestoreSubscribeTypes, PhotoType, SnapshotPhotos } from './types';
+import { DOC_CHANGES_PHOTO_TYPES, DOC_PATH, STATE_CHANGED } from './constants';
 
 export const uploadTask = (payload: AddUserPhotoType) => {
     const { userId, file, setProgress, setError, setUrl } = payload;
 
-    const storageRef = ref(storage, `user_${userId}`);
+    const storageRef = ref(storage, DOC_PATH.getUserPath(userId));
     const storageNewRef = ref(storageRef, file.name);
     const timestamp = serverTimestamp();
 
@@ -31,48 +33,65 @@ export const uploadTask = (payload: AddUserPhotoType) => {
         };
         // записываем в профиль пользователя и запоминаем автосгенерированное id коллекции
         const userPhotoCollection = await addDoc(
-            collection(projectFirestore, `user_${userId}`),
+            collection(projectFirestore, DOC_PATH.getUserPath(userId)),
             dataFile,
         );
         const imageUserFirebaseId = userPhotoCollection.id;
         // записываем в общие фото
-        setDoc(doc(projectFirestore, `common_photos`, imageUserFirebaseId), dataFile);
+        setDoc(doc(projectFirestore, DOC_PATH.getCommonPath(), imageUserFirebaseId), dataFile);
     };
 
-    const error = (err: StorageError) => {
+    const error = (e: unknown) => {
         // проверяем на ошибки при записи
-        setError(err.message);
+        if (e instanceof FirestoreError) setError(e.message);
     };
 
-    uploadBytesResumable(storageNewRef, file).on('state_changed', next, error, complete);
+    uploadBytesResumable(storageNewRef, file).on(STATE_CHANGED, next, error, complete);
 };
 
-const serializePhotos = (nonSerializedPhotos: any) => {
+const serializePhotos = (nonSerializedPhotos: SnapshotPhotos[]) => {
     return [...nonSerializedPhotos].map((item) => {
         return { ...item, addedTime: { ...item.addedTime } };
     });
 };
 
-const sortPhotos = (photos: any) =>
-    photos.sort((a: any, b: any) => b.addedTime.seconds - a.addedTime.seconds);
+const sortPhotos = (photos: SnapshotPhotos[]) =>
+    photos.sort((a, b) => b.addedTime.seconds - a.addedTime.seconds);
 
-const sortAndSerializePhotos = (unsortedPhotos: any) => {
+const sortAndSerializePhotos = (unsortedPhotos: SnapshotPhotos[]) => {
     const serializedPhotos = serializePhotos(unsortedPhotos);
     return sortPhotos(serializedPhotos);
 };
 
 type GetSnapshotPhotos = {
-    path: string;
-    photos: Record<string, string>[];
-    setStatePhotos: SetCommonPhotoType;
-};
+    photos: PhotoType;
+} & FirestoreSubscribeTypes;
 
 export const getSnapshotPhotos = ({ path, photos, setStatePhotos }: GetSnapshotPhotos) => {
-    const snapshotPhotos: any = [];
+    const snapshotPhotos: SnapshotPhotos[] = [];
 
     return onSnapshot(collection(projectFirestore, path), (querySnapshot) => {
-        querySnapshot.forEach((item) => {
-            snapshotPhotos.push({ id: item.id, ...item.data() });
+        const docChanges = querySnapshot.docChanges();
+
+        docChanges.forEach((changedPhoto) => {
+            if (changedPhoto.type === DOC_CHANGES_PHOTO_TYPES.ADDED) {
+                const { imageUrl, name, addedTime } = changedPhoto.doc.data();
+                const photo: SnapshotPhotos = {
+                    id: changedPhoto.doc.id,
+                    imageUrl,
+                    name,
+                    addedTime,
+                };
+
+                snapshotPhotos.push(photo);
+            }
+            if (changedPhoto.type === DOC_CHANGES_PHOTO_TYPES.REMOVED) {
+                const photoIndex = snapshotPhotos.findIndex(
+                    (photo) => changedPhoto.doc.id === photo.id,
+                );
+
+                snapshotPhotos.splice(photoIndex, 1);
+            }
         });
 
         const isEqualPhotos = snapshotPhotos.length === photos.length;

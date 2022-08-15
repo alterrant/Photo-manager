@@ -3,7 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { deleteObject, ref } from 'firebase/storage';
 import { deleteDoc, doc } from 'firebase/firestore';
 
-import { Unsubscribe } from '@firebase/firestore';
+import { Unsubscribe, FirestoreError } from '@firebase/firestore';
 import {
     addPhotoAttempt,
     addPhotoSuccess,
@@ -15,19 +15,24 @@ import {
     unsubscribeCommonPhotos,
     subscribeUserPhotos,
     unsubscribeUserPhotos,
-    PhotoStorageStateTypes,
 } from '.';
-import { AddUserPhotoType, DeleteUserPhotoType } from './types';
+import {
+    AddUserPhotoType,
+    DeleteUserPhotoType,
+    FirestoreSubscribeTypes,
+    PhotoStorageStateTypes,
+} from './types';
 import { getSnapshotPhotos, uploadTask } from './saga-helper';
 import { projectFirestore, storage } from '../../firebase/config';
 import { photoStorage } from '../../selectors';
+import { DOC_PATH } from './constants';
 
 function* addUserPhotoWorker({ payload }: PayloadAction<AddUserPhotoType>): Generator {
     try {
         yield call(uploadTask, payload);
         yield put(addPhotoSuccess());
-    } catch (e: any) {
-        yield put(addPhotoError(e.errorMessage));
+    } catch (e: unknown) {
+        if (e instanceof FirestoreError) yield put(addPhotoError(e.message));
     }
 }
 
@@ -35,18 +40,27 @@ function* deletePhotoWorker({ payload }: PayloadAction<DeleteUserPhotoType>): Ge
     const { userId, imageName, imageFirebaseId } = payload;
 
     try {
-        const userPhotosRef = ref(storage, `user_${userId}/${imageName}`);
+        const userPhotosRef = ref(storage, DOC_PATH.getUserPhotosPath(userId)(imageName));
         // удаляем из fireStore
         yield call(deleteObject, userPhotosRef);
-        // удаляем ссылку на файл из fireBase юзера
-        yield call(deleteDoc, doc(projectFirestore, `user_${userId}`, `${imageFirebaseId}`));
+        // удаляем ссылку на файл из fireBase юзера и общих фотографий
+        yield call(
+            deleteDoc,
+            doc(projectFirestore, DOC_PATH.getUserPath(userId), `${imageFirebaseId}`),
+        );
+        yield call(
+            deleteDoc,
+            doc(projectFirestore, DOC_PATH.getCommonPath(), `${imageFirebaseId}`),
+        );
         yield put(deletePhotoSuccess());
-    } catch (e: any) {
-        yield put(deletePhotoError(e.message));
+    } catch (e: unknown) {
+        if (e instanceof FirestoreError) yield put(deletePhotoError(e.message));
     }
 }
 
-function* firestorePhotosWorker({ payload }: PayloadAction<any>): Generator<StrictEffect> {
+function* firestorePhotosWorker({
+    payload,
+}: PayloadAction<FirestoreSubscribeTypes>): Generator<StrictEffect> {
     const { path, setStatePhotos } = payload;
     const { photos, isSubscribedUserPhotos, isSubscribedCommonPhotos } = (yield select(
         photoStorage,
@@ -58,8 +72,8 @@ function* firestorePhotosWorker({ payload }: PayloadAction<any>): Generator<Stri
         setStatePhotos,
     })) as Unsubscribe;
 
-    if (path !== 'common_photos' && !isSubscribedUserPhotos) yield call(unsubscribe);
-    if (path === 'common_photos' && !isSubscribedCommonPhotos) yield call(unsubscribe);
+    if (path !== DOC_PATH.getCommonPath() && !isSubscribedUserPhotos) yield call(unsubscribe);
+    if (path === DOC_PATH.getCommonPath() && !isSubscribedCommonPhotos) yield call(unsubscribe);
 }
 
 export function* photoStorageSaga(): Generator {

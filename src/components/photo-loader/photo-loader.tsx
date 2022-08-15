@@ -4,12 +4,12 @@ import { ProgressBar } from './progress-bar';
 import { SVGLoader } from '../assets/svg/loader';
 
 export const PhotoLoader = () => {
-    const [file, setFile] = useState<any>(null);
-    const [error, setError] = useState<any>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const allowedTypes = ['image/png', 'image/jpeg'];
 
-    const handleChange = (e: any) => {
-        const selectFile = e.target.files[0];
+    const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const selectFile = e.currentTarget.files![0];
 
         if (selectFile && allowedTypes.includes(selectFile.type)) {
             setFile(selectFile);

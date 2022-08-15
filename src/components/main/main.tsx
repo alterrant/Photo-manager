@@ -1,22 +1,30 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-import { useAppSelector } from '../../hooks';
 import { CommonPhotos } from '../common-photos';
 import { SwitchPhotos } from '../switch-photos';
 import { UserPhotos } from '../user-profile';
 
+export type SelectedPhotoUrl = string | null;
+export type SelectPhotoType = {
+    selectedPhotoUrl: SelectedPhotoUrl;
+    setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
+};
+
 export const Main = () => {
-    const isLookingMyPhotos = useAppSelector((state) => state.photoStorage.isLookingMyPhotos);
-    const [selectedPhoto, setSelectedPhoto] = useState(null);
-    const selectPhoto = { selectedPhoto, setSelectedPhoto };
+    const [isLookingMyPhotos, watchPhotosToggle] = useState<boolean>(true);
+    const [selectedPhotoUrl, setSelectedPhoto] = useState<SelectedPhotoUrl>(null);
+    const selectPhoto: SelectPhotoType = { selectedPhotoUrl, setSelectedPhoto };
 
     return (
         <>
-            <SwitchPhotos />
+            <SwitchPhotos
+                isLookingMyPhotos={isLookingMyPhotos}
+                watchPhotosToggle={watchPhotosToggle}
+            />
             {isLookingMyPhotos ? (
-                <UserPhotos selectedPhoto={selectPhoto} />
+                <UserPhotos selectPhoto={selectPhoto} isLookingMyPhotos={isLookingMyPhotos} />
             ) : (
-                <CommonPhotos selectedPhoto={selectPhoto} />
+                <CommonPhotos selectPhoto={selectPhoto} isLookingMyPhotos={isLookingMyPhotos} />
             )}
         </>
     );

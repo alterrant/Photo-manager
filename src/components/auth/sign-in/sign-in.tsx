@@ -1,17 +1,24 @@
 import { motion } from 'framer-motion';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Dispatch, SetStateAction, FC } from 'react';
 
-import { logInGitHub, logInGoogle } from '../../../utils/auth';
-import { logInAttempt } from '../../../store/auth';
+import { logInAttempt, OAuthLoginAttempt } from '../../../store/auth';
 import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
 import { useAppDispatch } from '../../../hooks';
 import { EmailPass } from '../../../store/auth/types';
 import { GitHubSVG } from '../../assets/svg/github';
 
-const SignInForm = ({ handleSubmit, error, setRegistrationPage }: any) => {
-    const dispatch = useAppDispatch();
+type SignInFormPropsTypes = {
+    setRegistrationPage: Dispatch<SetStateAction<boolean>>;
+};
 
+const SignInForm: FC<InjectedFormProps<EmailPass, SignInFormPropsTypes> & SignInFormPropsTypes> = ({
+    handleSubmit,
+    error,
+    setRegistrationPage,
+}) => {
+    const dispatch = useAppDispatch();
     const signInHandler = ({ email, password }: EmailPass) => {
         dispatch(logInAttempt({ email, password }));
     };
@@ -22,7 +29,7 @@ const SignInForm = ({ handleSubmit, error, setRegistrationPage }: any) => {
 
             <div className='login-button-wrapper'>
                 <motion.div
-                    onClick={logInGitHub}
+                    onClick={() => dispatch(OAuthLoginAttempt('gitHub'))}
                     className='auth-github login-button'
                     transition={{ duration: 0.3 }}
                     whileHover={{
@@ -34,7 +41,7 @@ const SignInForm = ({ handleSubmit, error, setRegistrationPage }: any) => {
                     GitHub
                 </motion.div>
                 <motion.div
-                    onClick={logInGoogle}
+                    onClick={() => dispatch(OAuthLoginAttempt('google'))}
                     className='auth-google login-button'
                     transition={{ duration: 0.3 }}
                     whileHover={{
@@ -87,12 +94,12 @@ const SignInForm = ({ handleSubmit, error, setRegistrationPage }: any) => {
 };
 
 export const SignIn = () =>
-    reduxForm({
+    reduxForm<EmailPass, SignInFormPropsTypes>({
         form: 'signInForm',
         validate,
     })(SignInForm);
 
-export default reduxForm({
+export default reduxForm<EmailPass, SignInFormPropsTypes>({
     form: 'signInForm',
     validate,
 })(SignInForm);

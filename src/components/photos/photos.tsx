@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { Photo } from './photo';
 import { useFirestoreGetUserPhotos } from '../../hooks/useFirestore';
+import { SelectedPhotoUrl } from '../main/main';
 
-export const Photos = (props: any) => {
+type PhotosType = {
+    isLookingMyPhotos: boolean;
+    setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
+};
+
+export const Photos = (props: PhotosType) => {
     const isOnePhoto = 'one-photo-grid';
     const isTwoPhoto = 'two-photo-grid';
     let styleWrapperPhotos;
