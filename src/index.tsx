@@ -36,6 +36,7 @@ ReactDOM.render(
                         <Route path='/' element={<MainPage />} />
                         {/* <Route path='*' element='PageNotFound' /> */}
                     </Route>
+                    <Route path='*' element={<div>testPage</div>} />
                 </Routes>
             </Provider>
         </BrowserRouter>
