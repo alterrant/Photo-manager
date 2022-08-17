@@ -7,7 +7,7 @@ import { SelectedPhotoUrl } from '../main/main';
 type PhotosType = {
     isLookingMyPhotos: boolean;
     setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
-};
+}
 
 export const Photos = (props: PhotosType) => {
     const isOnePhoto = 'one-photo-grid';
