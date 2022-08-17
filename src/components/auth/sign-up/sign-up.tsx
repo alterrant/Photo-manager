@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { InputLoginForm } from '../../common/form-control/input';
 import { validate } from '../../common/form-control/validators';
@@ -8,14 +9,9 @@ import { useAppDispatch } from '../../../hooks';
 import { sendRegistrationRequest } from '../../../store/registration';
 import { RegistrationRequestTypes } from '../../../store/registration/types';
 
-type SignUpFormPropsTypes = {
-    setRegistrationPage: Dispatch<SetStateAction<boolean>>;
-};
-
-const SignUpForm: FC<
-    InjectedFormProps<RegistrationRequestTypes, SignUpFormPropsTypes> & SignUpFormPropsTypes
-> = ({ handleSubmit, setRegistrationPage, error }) => {
+const SignUpForm: FC<InjectedFormProps<RegistrationRequestTypes>> = ({ handleSubmit, error }) => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const signUpHandler = ({ email, password }: RegistrationRequestTypes) => {
         dispatch(sendRegistrationRequest({ email, password }));
     };
@@ -61,7 +57,7 @@ const SignUpForm: FC<
                     If a member,{' '}
                     <motion.span
                         className='auth-text-link'
-                        onClick={() => setRegistrationPage(false)}
+                        onClick={() => navigate('/auth')}
                         whileHover={{ color: 'rgb(78,65,113)' }}
                     >
                         sign in
@@ -73,12 +69,12 @@ const SignUpForm: FC<
 };
 
 export const SignUp = () =>
-    reduxForm<RegistrationRequestTypes, SignUpFormPropsTypes>({
+    reduxForm<RegistrationRequestTypes>({
         form: 'signUpForm',
         validate,
     })(SignUpForm);
 
-export default reduxForm<RegistrationRequestTypes, SignUpFormPropsTypes>({
+export default reduxForm<RegistrationRequestTypes>({
     form: 'signUpForm',
     validate,
 })(SignUpForm);

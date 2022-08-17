@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { Dispatch, SetStateAction, FC } from 'react';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { logInAttempt, OAuthLoginAttempt } from '../../../store/auth';
 import { InputLoginForm } from '../../common/form-control/input';
@@ -9,16 +10,9 @@ import { useAppDispatch } from '../../../hooks';
 import { EmailPass } from '../../../store/auth/types';
 import { GitHubSVG } from '../../assets/svg/github';
 
-type SignInFormPropsTypes = {
-    setRegistrationPage: Dispatch<SetStateAction<boolean>>;
-};
-
-const SignInForm: FC<InjectedFormProps<EmailPass, SignInFormPropsTypes> & SignInFormPropsTypes> = ({
-    handleSubmit,
-    error,
-    setRegistrationPage,
-}) => {
+const SignInForm: FC<InjectedFormProps<EmailPass>> = ({ handleSubmit, error }) => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const signInHandler = ({ email, password }: EmailPass) => {
         dispatch(logInAttempt({ email, password }));
     };
@@ -82,7 +76,7 @@ const SignInForm: FC<InjectedFormProps<EmailPass, SignInFormPropsTypes> & SignIn
                     Not a member?{' '}
                     <motion.span
                         className='auth-text-link'
-                        onClick={() => setRegistrationPage(true)}
+                        onClick={() => navigate('/registration')}
                         whileHover={{ color: 'rgb(78,65,113)' }}
                     >
                         Sign up now
@@ -94,12 +88,12 @@ const SignInForm: FC<InjectedFormProps<EmailPass, SignInFormPropsTypes> & SignIn
 };
 
 export const SignIn = () =>
-    reduxForm<EmailPass, SignInFormPropsTypes>({
+    reduxForm<EmailPass>({
         form: 'signInForm',
         validate,
     })(SignInForm);
 
-export default reduxForm<EmailPass, SignInFormPropsTypes>({
+export default reduxForm<EmailPass>({
     form: 'signInForm',
     validate,
 })(SignInForm);

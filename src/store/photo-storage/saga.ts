@@ -3,7 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { deleteObject, ref } from 'firebase/storage';
 import { deleteDoc, doc } from 'firebase/firestore';
 
-import { Unsubscribe, FirestoreError } from '@firebase/firestore';
+import { Unsubscribe } from '@firebase/firestore';
 import {
     addPhotoAttempt,
     addPhotoSuccess,
@@ -31,8 +31,8 @@ function* addUserPhotoWorker({ payload }: PayloadAction<AddUserPhotoType>): Gene
     try {
         yield call(uploadTask, payload);
         yield put(addPhotoSuccess());
-    } catch (e: unknown) {
-        if (e instanceof FirestoreError) yield put(addPhotoError(e.message));
+    } catch (e: any) {
+        yield put(addPhotoError(e.message));
     }
 }
 
@@ -53,8 +53,8 @@ function* deletePhotoWorker({ payload }: PayloadAction<DeleteUserPhotoType>): Ge
             doc(projectFirestore, DOC_PATH.getCommonPath(), `${imageFirebaseId}`),
         );
         yield put(deletePhotoSuccess());
-    } catch (e: unknown) {
-        if (e instanceof FirestoreError) yield put(deletePhotoError(e.message));
+    } catch (e: any) {
+        yield put(deletePhotoError(e.message));
     }
 }
 

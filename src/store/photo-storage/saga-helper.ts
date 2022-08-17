@@ -1,5 +1,4 @@
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { FirestoreError } from '@firebase/firestore';
 import { onSnapshot, addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { UploadTaskSnapshot } from '@firebase/storage';
 import { projectFirestore, storage } from '../../firebase/config';
@@ -41,9 +40,9 @@ export const uploadTask = (payload: AddUserPhotoType) => {
         setDoc(doc(projectFirestore, DOC_PATH.getCommonPath(), imageUserFirebaseId), dataFile);
     };
 
-    const error = (e: unknown) => {
+    const error = (e: any) => {
         // проверяем на ошибки при записи
-        if (e instanceof FirestoreError) setError(e.message);
+        setError(e.message);
     };
 
     uploadBytesResumable(storageNewRef, file).on(STATE_CHANGED, next, error, complete);

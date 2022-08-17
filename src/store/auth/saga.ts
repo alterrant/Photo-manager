@@ -1,10 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { FirestoreError } from '@firebase/firestore';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { stopSubmit } from 'redux-form';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+
+import { UserCredential } from '@firebase/auth';
+import { getUserProfile } from '../../utils/auth';
 import {
-    AuthUserProfileTypes,
     logInAttempt,
     logInSuccess,
     loginError,
@@ -20,23 +21,23 @@ function* logInWorker({ payload }: PayloadAction<EmailPass>) {
     try {
         const auth = getAuth();
 
-        const authUserProfile: AuthUserProfileTypes = yield call(
+        const authUserProfile: UserCredential = yield call(
             signInWithEmailAndPassword,
             auth,
             payload.email,
             payload.password,
         );
 
-        yield put(logInSuccess(authUserProfile));
-    } catch (e: unknown) {
-        if (e instanceof FirestoreError) {
-            yield call(stopSubmit, 'signInForm', {
-                _error: 'Invalid email or password',
-                email: ' ',
-                password: ' ',
-            });
-            yield put(loginError(e.message));
-        }
+        const userProfile = getUserProfile(authUserProfile.user);
+
+        yield put(logInSuccess(userProfile));
+    } catch (e: any) {
+        yield call(stopSubmit, 'signInForm', {
+            _error: 'Invalid email or password',
+            email: ' ',
+            password: ' ',
+        });
+        yield put(loginError(e.code));
     }
 }
 
@@ -45,10 +46,8 @@ function* OAuthLogInWorker({ payload }: PayloadAction<OAuthService>) {
         yield call(OAuthLogIn, payload);
 
         yield put(OAuthLoginSuccess);
-    } catch (e: unknown) {
-        if (e instanceof FirestoreError) {
-            yield put(OAuthLoginError);
-        }
+    } catch (e: any) {
+        yield put(OAuthLoginError);
     }
 }
 
