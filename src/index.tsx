@@ -16,6 +16,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
                 <Routes>
+                    <Route path='*' element={<div>testPage</div>} />
                     <Route
                         path='/auth'
                         element={
@@ -36,7 +37,6 @@ ReactDOM.render(
                         <Route path='/' element={<MainPage />} />
                         {/* <Route path='*' element='PageNotFound' /> */}
                     </Route>
-                    <Route path='*' element={<div>testPage</div>} />
                 </Routes>
             </Provider>
         </BrowserRouter>
