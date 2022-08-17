@@ -1,6 +1,6 @@
 {
-  "homepage": "https://alterrant.github.io/Photo-meneger",
-  "name": "photo-meneger",
+  "homepage": "https://alterrant.github.io/Photo-manager",
+  "name": "photo-manager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -1,2 +1,2 @@
 # Photo-manager
-https://alterrant.github.io/Photo-meneger
+https://alterrant.github.io/Photo-manager
