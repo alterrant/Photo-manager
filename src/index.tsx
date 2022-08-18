@@ -13,7 +13,7 @@ import './index.css';
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 <Routes>
                     <Route
@@ -38,7 +38,7 @@ ReactDOM.render(
                     </Route>
                 </Routes>
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     </React.StrictMode>,
     document.getElementById('root'),
 );
