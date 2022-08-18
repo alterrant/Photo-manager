@@ -16,6 +16,7 @@ ReactDOM.render(
         <HashRouter>
             <Provider store={store}>
                 <Routes>
+                    <Route path='*' element={<div>testPage</div>} />
                     <Route
                         path='/auth'
                         element={
