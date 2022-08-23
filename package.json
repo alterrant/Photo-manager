@@ -4,6 +4,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/app": "^0.7.30",
+    "@firebase/auth": "^0.20.5",
+    "@firebase/firestore": "^3.4.14",
+    "@firebase/storage": "^0.9.9",
+    "@firebase/util": "^1.6.3",
     "@reduxjs/toolkit": "^1.8.3",
     "firebase": "^9.2.0",
     "firebaseui": "^6.0.0",
@@ -29,10 +34,8 @@
     "lint:scripts": "eslint \"**/*.{js,jsx,ts,tsx}\" --ext .js,.jsx,.ts,.tsx",
     "lint": "yarn lint:scripts",
     "lint:fix": "yarn lint:scripts --fix",
-    "format": "prettier --ignore-path \"./.gitignore\" --write \"./**/*.{ts,tsx,js,jsx,css,json}\" && yarn lint:fix --config ./.prettierrc",
-    "prepare": "husky install"
+    "format": "prettier --ignore-path \"./.gitignore\" --write \"./**/*.{ts,tsx,js,jsx,css,json}\" && yarn lint:fix --config ./.prettierrc"
   },
-  "prettier": "arui-presets-lint/prettier",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -47,6 +50,13 @@
     "src/**/*.{css,scss,sass}": [
       "prettier --write"
     ]
+  },
+  "prettier": "arui-presets-lint/prettier",
+  "eslintConfig": {
+    "extends": "./node_modules/arui-presets-lint/eslint"
+  },
+  "stylelint": {
+    "extends": "arui-presets-lint/stylelint"
   },
   "commitlint": {
     "extends": "./node_modules/arui-presets-lint/commitlint"
@@ -64,9 +74,6 @@
     ]
   },
   "devDependencies": {
-    "@firebase/auth": "^0.20.5",
-    "@firebase/firestore": "^3.4.14",
-    "@firebase/storage": "^0.9.9",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -75,31 +82,38 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/redux-form": "^8.3.5",
-    "@typescript-eslint/eslint-plugin": "5.13.0",
-    "@typescript-eslint/parser": "5.0.0",
-    "arui-presets-lint": "^6.0.1",
-    "eslint-config-airbnb": "^19.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "arui-presets-lint": "6.0.1",
+    "eslint": "8.2.0",
+    "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^3.3.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-import-resolver-typescript": "^3.4.2",
     "eslint-plugin-css-import-order": "^1.1.0",
-    "eslint-plugin-css-modules": "^2.11.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-dirnames": "1.0.3",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-unicorn": "^43.0.2",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "eslint-plugin-unicorn": "42.0.0",
     "gh-pages": "^3.2.3",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
+    "husky": "4.3.8",
+    "lint-staged": "12.5.0",
     "normalize.css": "^8.0.1",
     "peerdeps": "^1.1.1",
-    "prettier": "^2.7.1",
+    "prettier": "2.7.1",
     "react-app-rewired": "^2.1.8",
     "react-scripts": "^5.0.1",
-    "typescript": "^4.7.4",
+    "stylelint": "14.9.1",
+    "stylelint-config-prettier": "9.0.3",
+    "typescript": "*",
+    "typescript-plugin-css-modules": "^3.4.0",
     "yarn": "^1.22.19"
   }
 }

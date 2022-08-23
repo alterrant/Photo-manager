@@ -7,15 +7,15 @@ import { auth } from '../../selectors';
 import { Preloader } from '../common/preloader';
 
 export const PrivateRoute = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const path = useLocation().pathname;
-    const { isAuth } = useAppSelector(auth);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const path = useLocation().pathname;
+  const { isAuth } = useAppSelector(auth);
 
-    useEffect(() => {
-        authObserver({ dispatch, navigate, path });
-    }, [path, navigate, dispatch]);
+  useEffect(() => {
+    authObserver({ dispatch, navigate, path });
+  }, [path, navigate, dispatch]);
 
-    if (isAuth) return <Outlet />;
-    return <Preloader />;
+  if (isAuth) return <Outlet />;
+  return <Preloader />;
 };

@@ -2,6 +2,6 @@ const GOOGLE = 'google';
 const GITHUB = 'gitHub';
 
 export const SERVICES = {
-    GOOGLE,
-    GITHUB,
+  GOOGLE,
+  GITHUB,
 } as const;

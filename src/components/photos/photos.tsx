@@ -1,40 +1,40 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 import { Photo } from './photo';
-import { useFirestoreGetUserPhotos } from '../../hooks/useFirestore';
+import { useFirestoreGetUserPhotos } from '../../hooks/use-firestore';
 import { SelectedPhotoUrl } from '../main/main';
 
 type PhotosType = {
-    isLookingMyPhotos: boolean;
-    setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
-}
+  isLookingMyPhotos: boolean;
+  setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
+};
 
-export const Photos = (props: PhotosType) => {
-    const isOnePhoto = 'one-photo-grid';
-    const isTwoPhoto = 'two-photo-grid';
-    let styleWrapperPhotos;
+export const Photos = (properties: PhotosType) => {
+  const isOnePhoto = 'one-photo-grid';
+  const isTwoPhoto = 'two-photo-grid';
+  let styleWrapperPhotos;
 
-    const userPhotos = useFirestoreGetUserPhotos();
+  const userPhotos = useFirestoreGetUserPhotos();
 
-    switch (userPhotos && userPhotos.length) {
-        case 1:
-            styleWrapperPhotos = isOnePhoto;
-            break;
+  switch (userPhotos.length) {
+    case 1:
+      styleWrapperPhotos = isOnePhoto;
+      break;
 
-        case 2:
-            styleWrapperPhotos = isTwoPhoto;
-            break;
+    case 2:
+      styleWrapperPhotos = isTwoPhoto;
+      break;
 
-        default:
-            styleWrapperPhotos = 'photos-wrapper';
-            break;
-    }
+    default:
+      styleWrapperPhotos = 'photos-wrapper';
+      break;
+  }
 
-    return (
-        <div>
-            <ul className={styleWrapperPhotos}>
-                <Photo {...props} photos={userPhotos} />
-            </ul>
-        </div>
-    );
+  return (
+    <div>
+      <ul className={styleWrapperPhotos}>
+        <Photo {...properties} photos={userPhotos} />
+      </ul>
+    </div>
+  );
 };

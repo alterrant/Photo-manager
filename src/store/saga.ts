@@ -4,5 +4,5 @@ import { registration } from './registration/saga';
 import { photoStorageSaga } from './photo-storage/saga';
 
 export function* rootSaga(): Generator {
-    yield all([authSaga(), registration(), photoStorageSaga()]);
+  yield all([authSaga(), registration(), photoStorageSaga()]);
 }

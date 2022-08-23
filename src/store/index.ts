@@ -10,18 +10,18 @@ import { rootSaga } from './saga';
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
-    auth: authReducer,
-    registrationReducer,
-    photoStorage: photoStorageReducer,
-    form: formReducer,
+  auth: authReducer,
+  registrationReducer,
+  photoStorage: photoStorageReducer,
+  form: formReducer,
 };
 
 export const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }).concat(sagaMiddleware),
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

@@ -5,37 +5,35 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { logInSuccess } from '../store/auth';
 
 export const getUserProfile = (user: UserInfo) => {
-    const { providerId, photoURL, phoneNumber, email, displayName, uid } = user;
-    return {
-        providerId,
-        photoURL,
-        phoneNumber,
-        email,
-        displayName,
-        uid,
-    };
+  const { providerId, photoURL, phoneNumber, email, displayName, uid } = user;
+  return {
+    providerId,
+    photoURL,
+    phoneNumber,
+    email,
+    displayName,
+    uid,
+  };
 };
 
 export const authObserver = ({
-    dispatch,
-    navigate,
-    path,
+  dispatch,
+  navigate,
+  path,
 }: {
-    dispatch: Dispatch;
-    navigate: NavigateFunction;
-    path: string;
+  dispatch: Dispatch;
+  navigate: NavigateFunction;
+  path: string;
 }) => {
-    const auth = getAuth();
+  const auth = getAuth();
 
-    onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser) {
-            const userProfile = getUserProfile(currentUser);
+  onAuthStateChanged(auth, currentUser => {
+    if (currentUser !== null) {
+      const userProfile = getUserProfile(currentUser);
 
-            dispatch(logInSuccess(userProfile));
+      dispatch(logInSuccess(userProfile));
 
-            if (path === '/auth') navigate('/');
-        } else if (!currentUser && path !== '/registration') {
-            navigate('/auth');
-        }
-    });
+      if (path === '/auth') navigate('/');
+    } else if (path !== '/registration') navigate('/auth');
+  });
 };

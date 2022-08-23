@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Photo-manager/static/css/main.dca24c33.css",
+    "main.js": "/Photo-manager/static/js/main.4b1dbf54.js",
+    "static/media/auth-background.jpg": "/Photo-manager/static/media/auth-background.4be647a3af0c2067c731.jpg",
+    "index.html": "/Photo-manager/index.html",
+    "main.dca24c33.css.map": "/Photo-manager/static/css/main.dca24c33.css.map",
+    "main.4b1dbf54.js.map": "/Photo-manager/static/js/main.4b1dbf54.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dca24c33.css",
+    "static/js/main.4b1dbf54.js"
+  ]
+}
