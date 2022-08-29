@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { auth } from '../../selectors';
@@ -24,6 +24,7 @@ export const AuthPage = ({ children }: AuthPagePropertiesTypes) => {
       <div className="auth-container">
         <div className="auth-content">{children}</div>
       </div>
+      <Outlet />
     </div>
   );
 };

@@ -4,10 +4,12 @@ import { Provider } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AuthPage } from './pages/auth';
 import { store } from './store';
-import SignIn from './components/auth/sign-in/sign-in';
-import SignUp from './components/auth/sign-up/sign-up';
+// import SignUp from './components/auth/sign-up/sign-up';
 import { MainPage } from './pages/main';
 import { PrivateRoute } from './components/private-route';
+import { RegistrationForm } from './components/forms/registration-form';
+import { LoginForm } from './components/forms/login-form';
+import { UpdateProfileForm } from './components/forms/update-profile-form';
 
 import './index.css';
 
@@ -20,7 +22,7 @@ ReactDOM.render(
             path="/auth"
             element={
               <AuthPage>
-                <SignIn />
+                <LoginForm />
               </AuthPage>
             }
           />
@@ -28,7 +30,16 @@ ReactDOM.render(
             path="/registration"
             element={
               <AuthPage>
-                <SignUp />
+                <RegistrationForm />
+                {/* <SignUp /> */}
+              </AuthPage>
+            }
+          />
+          <Route
+            path="/update-profile"
+            element={
+              <AuthPage>
+                <UpdateProfileForm />
               </AuthPage>
             }
           />

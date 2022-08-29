@@ -51,6 +51,12 @@ const authSlice = createSlice({
       state.errorMessage = action.payload;
       state.authUserProfile = defaultUserProfile;
     },
+    loginErrorReset: state => {
+      state.isAuth = false;
+      state.isLoading = false;
+      state.errorMessage = '';
+      state.authUserProfile = defaultUserProfile;
+    },
     OAuthLoginAttempt: (state, action: PayloadAction<OAuthService>) => {
       state.isAuth = false;
       state.isLoading = false;
@@ -81,6 +87,7 @@ export const {
   logInAttempt,
   logInSuccess,
   loginError,
+  loginErrorReset,
   OAuthLoginAttempt,
   OAuthLoginSuccess,
   OAuthLoginError,

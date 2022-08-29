@@ -22,7 +22,6 @@
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:unicorn/recommended",
-        "plugin:react/recommended",
         "plugin:jsx-a11y/recommended",
         "plugin:css-import-order/recommended",
         "plugin:import/errors",
@@ -37,12 +36,7 @@
     ],
     "rules": {
         "linebreak-style": 0,
-        "no-param-reassign": ["error", {
-            "props": true,
-            "ignorePropertyModificationsFor": [
-                "state"
-            ]
-        }],
+        "no-param-reassign": "off",
         "comma-dangle": "off",
         "semi": ["error", "always"],
         "indent": "off",
@@ -70,6 +64,8 @@
         "react/jsx-wrap-multilines": "off",
         "react/jsx-props-no-spreading": "off",
         "react/jsx-indent-props": "off",
+        "react/button-has-type": "off",
+        "react/jsx-indent": "off",
         "react/function-component-definition": [2, {
             "namedComponents": "arrow-function",
             "unnamedComponents": "arrow-function"

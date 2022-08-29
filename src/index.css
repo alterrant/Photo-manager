@@ -209,17 +209,16 @@ li {
 
 .auth-input {
     width: 100%;
-    height: 32px;
-    padding: 0 7px;
+    height: 42px;
     background-color: #e6f1fa;
     border: 1px solid gainsboro;
     border-radius: 7px;
     outline: none;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .auth-submit-container {
-    margin-top: 30px;
+    margin-top: 40px;
     height: 45px;
     width: 100%;
     display: flex;
@@ -237,6 +236,12 @@ li {
     font-family: Poppins-Regular;
     font-size: 28px;
     cursor: pointer;
+    transition: box-shadow 0.3s, text-shadow 0.3s;
+}
+
+.auth-submit-button:hover {
+  box-shadow: 0 4px 8px 0 rgba(31, 69, 112, 1);
+  text-shadow: 0 0 1px rgba(120, 120, 158, 0.74);
 }
 
 .auth-signUp {
@@ -259,9 +264,11 @@ li {
     justify-content: space-between;
     padding-top: 16px;
 }
-
+.login-button:hover {
+  box-shadow: 0 4px 8px 0 rgba(31, 69, 112, 1);
+  text-shadow: 0 0 1px rgba(120, 120, 158, 0.74);
+}
 .login-button {
-    cursor: pointer;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -271,12 +278,15 @@ li {
     font-family: Poppins-Regular;
     font-size: 25px;
     line-height: 1.5;
+
+    transition: box-shadow 0.3s, text-shadow 0.3s;
 }
 
 .auth-github {
     box-shadow: 0px 4px 8px 0px rgba(43, 125, 226, 0.44);
     background-color: #e6f1fa;
     color: #555555;
+
 }
 
 .auth-google {
@@ -287,12 +297,16 @@ li {
 
 .GitHubSVG {
     margin-right: 2px;
-    min-width: 26px;
-    transition-duration: 0.4s;
+    width: 32px;
+    transition-duration: 0.3s;
     display: flex;
     justify-content: center;
 }
 
+.auth-github:hover {
+  box-shadow: 0 4px 8px 0 rgba(31, 69, 112, 1);
+  text-shadow: 0 0 1px rgba(31, 69, 112, 1);
+}
 .auth-github:hover .GitHubSVG {
   filter: drop-shadow( 0px 0px 1px rgba(31, 69, 112, 1));
 }
@@ -325,7 +339,7 @@ li {
     right: 2px;
     font-family: Poppins-Regular;
     color: rgba(231, 32, 95, 0.56);
-    font-size: 14px;
+    font-size: 17px;
 }
 
 header {
@@ -358,4 +372,8 @@ header {
 
 .common-photo-wrapper {
     margin-top: 28px;
+}
+
+input[type="password"]::-ms-reveal {
+  display: none;
 }

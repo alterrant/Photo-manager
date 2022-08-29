@@ -34,6 +34,6 @@ export const authObserver = ({
       dispatch(logInSuccess(userProfile));
 
       if (path === '/auth') navigate('/');
-    } else if (path !== '/registration') navigate('/auth');
+    } else if (path !== '/registration' && path !== '/update-profile') navigate('/auth');
   });
 };

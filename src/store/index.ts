@@ -5,14 +5,16 @@ import { reducer as formReducer } from 'redux-form';
 import { authReducer } from './auth';
 import { registrationReducer } from './registration';
 import { photoStorageReducer } from './photo-storage';
+import { updateProfileReducer } from './update-profile';
 import { rootSaga } from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
   auth: authReducer,
-  registrationReducer,
+  registration: registrationReducer,
   photoStorage: photoStorageReducer,
+  updateProfile: updateProfileReducer,
   form: formReducer,
 };
 
