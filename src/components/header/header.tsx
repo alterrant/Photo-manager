@@ -1,5 +1,5 @@
 import { GitHubSVG } from '../assets/svg/github';
-import { SignOut } from '../auth/sign-out';
+import { SignOut } from '../sign-out';
 
 export const Header = () => (
   <header>

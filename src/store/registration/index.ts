@@ -4,14 +4,14 @@ import { RegistrationRequestTypes } from './types';
 
 type RegistrationError = string;
 
-type InitialStateTypes = {
+export type RegistrationStateTypes = {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
   errorMessage: string;
 };
 
-const initialState: InitialStateTypes = {
+const initialState: RegistrationStateTypes = {
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -37,7 +37,7 @@ const registrationSlice = createSlice({
       state.isError = true;
       state.errorMessage = action.payload;
     },
-    resetRegistrationState: state => {
+    registrationErrorReset: state => {
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
@@ -50,6 +50,6 @@ export const {
   sendRegistrationRequest,
   registrationSuccess,
   registrationError,
-  resetRegistrationState,
+  registrationErrorReset,
 } = registrationSlice.actions;
 export const registrationReducer = registrationSlice.reducer;

@@ -1,0 +1,46 @@
+.inputWrapper {
+  position: relative;
+}
+
+.imgInputStyle {
+  opacity: 0.3;
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.hidePassword {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  background: none;
+  border: none;
+}
+
+.labelText {
+  padding-top: 10px;
+  display: block;
+}
+
+.passwordPadding {
+  padding-right: 50px;
+}
+.imagePadding {
+  padding-left: 50px;
+}
+.inputDefault {
+  transition-duration: 0.5s;
+}
+
+.inputDefault:focus {
+  box-shadow: 0 0 8px 0 rgba(43, 125, 226, 0.44);
+}
+.inputError {
+  box-shadow: 0 0 8px 0 rgba(229, 42, 102, 0.44) !important;
+}

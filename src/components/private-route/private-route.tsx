@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/react-redux';
 import { authObserver } from '../../utils/auth';
 import { auth } from '../../selectors';
 import { Preloader } from '../common/preloader';

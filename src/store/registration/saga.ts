@@ -17,7 +17,7 @@ function* signUpWorker({ payload }: PayloadAction<EmailPass>) {
     if (error instanceof FirebaseError) {
       switch (error.code) {
         case AuthErrorCodes.EMAIL_EXISTS: {
-          yield put(registrationError('email already exist'));
+          yield put(registrationError(AuthErrorCodes.EMAIL_EXISTS));
           break;
         }
         case AuthErrorCodes.ARGUMENT_ERROR: {

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/react-redux';
 import { deletePhotoAttempt } from '../../../../store/photo-storage';
 import { CloseSvg } from '../../../assets/svg/close';
 

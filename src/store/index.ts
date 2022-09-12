@@ -1,19 +1,19 @@
 import createSagaMiddleware from 'redux-saga';
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer as formReducer } from 'redux-form';
 
 import { authReducer } from './auth';
 import { registrationReducer } from './registration';
 import { photoStorageReducer } from './photo-storage';
+import { updateProfileReducer } from './update-profile';
 import { rootSaga } from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
   auth: authReducer,
-  registrationReducer,
+  registration: registrationReducer,
   photoStorage: photoStorageReducer,
-  form: formReducer,
+  updateProfile: updateProfileReducer,
 };
 
 export const store = configureStore({
