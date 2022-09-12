@@ -11,6 +11,7 @@ export type AddUserPhotoType = {
   setProgress: Dispatch<SetStateAction<SetProgressType>>;
   setError: Dispatch<SetStateAction<SetErrorType>>;
   setUrl: Dispatch<SetStateAction<SetUrlType>>;
+  destination: 'profileAvatar' | 'photos';
 };
 
 export type DeleteUserPhotoType = {

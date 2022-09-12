@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AuthPage } from './pages/auth';
 import { store } from './store';
-// import SignUp from './components/auth/sign-up/sign-up';
 import { MainPage } from './pages/main';
 import { PrivateRoute } from './components/private-route';
 import { RegistrationForm } from './components/forms/registration-form';
@@ -31,7 +30,6 @@ ReactDOM.render(
             element={
               <AuthPage>
                 <RegistrationForm />
-                {/* <SignUp /> */}
               </AuthPage>
             }
           />

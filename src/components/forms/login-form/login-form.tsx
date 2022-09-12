@@ -3,17 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
 
-import { AuthErrorCodes } from '@firebase/auth';
 import { EmailPass } from '../../../store/auth/types';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/react-redux';
 import { logInAttempt, OAuthLoginAttempt, loginErrorReset } from '../../../store/auth';
 import { Input } from '../../common/input';
 import { loginFormFieldsData } from './login-form-fields-data';
 import { Button } from '../../common/button';
 import { auth } from '../../../selectors';
-import { INPUT_TYPES } from '../../../constants/input-constants';
-import { ERROR_MESSAGES } from '../../../constants/error-messages';
 import gitHub from '../../assets/svg/git-hub.svg';
+import { setFormError } from './login-form-utils';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -34,35 +32,7 @@ export const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (errorMessage) {
-      switch (errorMessage) {
-        case AuthErrorCodes.USER_DELETED: {
-          setError(INPUT_TYPES.EMAIL, { message: ERROR_MESSAGES.USER_NOT_FOUNDED });
-          break;
-        }
-        case AuthErrorCodes.USER_DISABLED: {
-          setError(INPUT_TYPES.EMAIL, { message: ERROR_MESSAGES.BANNED });
-          break;
-        }
-        case AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER: {
-          setError(INPUT_TYPES.EMAIL, { message: ERROR_MESSAGES.USER_NOT_FOUNDED });
-          break;
-        }
-        case AuthErrorCodes.INVALID_PASSWORD: {
-          setError(INPUT_TYPES.PASSWORD, { message: ERROR_MESSAGES.INVALID_PASSWORD });
-          break;
-        }
-        case AuthErrorCodes.INVALID_EMAIL: {
-          setError(INPUT_TYPES.PASSWORD, { message: ERROR_MESSAGES.INVALID_EMAIL });
-          break;
-        }
-        default: {
-          setError(INPUT_TYPES.PASSWORD, { message: errorMessage });
-          setError(INPUT_TYPES.EMAIL, { message: errorMessage });
-          break;
-        }
-      }
-    }
+    if (errorMessage) setFormError(setError, errorMessage);
   }, [setError, errorMessage, isSubmitting]);
 
   useEffect(() => {

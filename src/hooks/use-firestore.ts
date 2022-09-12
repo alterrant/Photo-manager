@@ -7,7 +7,7 @@ import {
   unsubscribeUserPhotos,
   setPhotos,
 } from '../store/photo-storage';
-import { useAppDispatch, useAppSelector } from './index';
+import { useAppDispatch, useAppSelector } from './react-redux';
 import { auth, photoStorage } from '../selectors';
 import { PhotoType } from '../store/photo-storage/types';
 import { DOC_PATH } from '../store/photo-storage/constants';
@@ -48,7 +48,7 @@ export const useFirestoreGetCommonPhotos = () => {
 export const useFirestoreGetUserPhotos = () => {
   const { dispatch, photos, statePhotos, setStatePhotos } = usePhotos();
   const { authUserProfile } = useAppSelector(auth);
-  const path = DOC_PATH.getUserPath(authUserProfile.uid);
+  const path = `${DOC_PATH.getUserPath(authUserProfile.uid)}/photos/photosCollection`;
 
   useEffect(() => {
     dispatch(subscribeUserPhotos({ path, setStatePhotos }));

@@ -13,10 +13,11 @@ import {
 import { DOC_CHANGES_PHOTO_TYPES, DOC_PATH, STATE_CHANGED } from './constants';
 
 export const uploadTask = (payload: AddUserPhotoType) => {
-  const { userId, file, setProgress, setError, setUrl } = payload;
+  const { userId, file, setProgress, setError, setUrl, destination } = payload;
 
   const storageReference = ref(storage, DOC_PATH.getUserPath(userId));
-  const storageNewReference = ref(storageReference, file.name);
+  const storagePhotosReference = ref(storageReference, destination);
+  const storageFileReference = ref(storagePhotosReference, file.name);
   const timestamp = serverTimestamp();
 
   const next = (snap: UploadTaskSnapshot) => {
@@ -28,7 +29,7 @@ export const uploadTask = (payload: AddUserPhotoType) => {
 
   const complete = async () => {
     // выполняем при завершении
-    const url = await getDownloadURL(storageNewReference);
+    const url = await getDownloadURL(storageFileReference);
 
     setUrl(url);
     // запись свойств файла и url в fireDataBase
@@ -38,13 +39,20 @@ export const uploadTask = (payload: AddUserPhotoType) => {
       imageUrl: url,
     };
     // записываем в профиль пользователя и запоминаем автосгенерированное id коллекции
-    const userPhotoCollection = await addDoc(
-      collection(projectFirestore, DOC_PATH.getUserPath(userId)),
-      dataFile
-    );
-    const imageUserFirebaseId = userPhotoCollection.id;
-    // записываем в общие фото
-    await setDoc(doc(projectFirestore, DOC_PATH.getCommonPath(), imageUserFirebaseId), dataFile);
+    if (destination === 'photos') {
+      const userPhotoCollection = await addDoc(
+        collection(projectFirestore, DOC_PATH.getUserPath(userId), destination, 'photosCollection'),
+        dataFile
+      );
+      const imageUserFirebaseId = userPhotoCollection.id;
+      // записываем в общие фото
+      await setDoc(doc(projectFirestore, DOC_PATH.getCommonPath(), imageUserFirebaseId), {
+        ...dataFile,
+        userId,
+      });
+    } else {
+      await setDoc(doc(projectFirestore, DOC_PATH.getUserPath(userId), destination), dataFile);
+    }
   };
 
   const error = (e: FirebaseError) => {
@@ -52,7 +60,7 @@ export const uploadTask = (payload: AddUserPhotoType) => {
     setError(e.code);
   };
 
-  uploadBytesResumable(storageNewReference, file).on(STATE_CHANGED, next, error, complete);
+  uploadBytesResumable(storageFileReference, file).on(STATE_CHANGED, next, error, complete);
 };
 
 const serializePhotos = (nonSerializedPhotos: SnapshotPhotos[]) =>

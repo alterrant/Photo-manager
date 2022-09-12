@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { logOut } from '../../../store/auth';
+import { logOut } from '../../store/auth';
 
 export const SignOut = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,5 @@
 import createSagaMiddleware from 'redux-saga';
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer as formReducer } from 'redux-form';
 
 import { authReducer } from './auth';
 import { registrationReducer } from './registration';
@@ -15,7 +14,6 @@ const rootReducer = {
   registration: registrationReducer,
   photoStorage: photoStorageReducer,
   updateProfile: updateProfileReducer,
-  form: formReducer,
 };
 
 export const store = configureStore({
