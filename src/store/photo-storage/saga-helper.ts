@@ -103,7 +103,6 @@ export const getSnapshotPhotos = ({ path, photos, setStatePhotos }: GetSnapshotP
       }
     });
 
-    const isEqualPhotos = snapshotPhotos.length === photos.length;
-    if (!isEqualPhotos) setStatePhotos(sortAndSerializePhotos(snapshotPhotos));
+    setStatePhotos(sortAndSerializePhotos(snapshotPhotos));
   });
 };

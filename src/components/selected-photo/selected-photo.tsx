@@ -1,10 +1,8 @@
 import { motion } from 'framer-motion';
 import { SyntheticEvent } from 'react';
-import { SelectPhotoType } from '../main/main';
+import { SelectPhotoType } from '../../types/select-photo';
 
-type SelectedPhotoTypes = SelectPhotoType;
-
-export const SelectedPhoto = ({ selectedPhotoUrl, setSelectedPhoto }: SelectedPhotoTypes) => {
+export const SelectedPhoto = ({ selectedPhotoUrl, setSelectedPhoto }: SelectPhotoType) => {
   const handleClick = (e: SyntheticEvent) => {
     if ((e.target as HTMLDivElement).classList.contains('selectedPhoto-wrapper')) {
       setSelectedPhoto(null);

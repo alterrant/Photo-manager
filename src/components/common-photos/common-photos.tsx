@@ -1,18 +1,15 @@
+import { useState } from 'react';
 import { useFirestoreGetCommonPhotos } from '../../hooks/use-firestore';
-import { UserTitle } from '../main/user-titile';
+import { Title } from '../titile';
 import { Photo } from '../photos/photo';
 import { SelectedPhoto } from '../selected-photo';
-import { SelectPhotoType } from '../main/main';
+import { SelectedPhotoUrl } from '../../types/select-photo';
 
-type CommonPhotosTypes = {
-  isLookingMyPhotos: boolean;
-  selectPhoto: SelectPhotoType;
-};
-
-export const CommonPhotos = ({ selectPhoto, isLookingMyPhotos }: CommonPhotosTypes) => {
+export const CommonPhotos = () => {
+  let styleWrapperPhotos;
   const isOnePhoto = 'one-photo-grid';
   const isTwoPhoto = 'two-photo-grid';
-  let styleWrapperPhotos;
+  const [selectedPhotoUrl, setSelectedPhoto] = useState<SelectedPhotoUrl>(null);
 
   const commonPhotos = useFirestoreGetCommonPhotos();
 
@@ -32,21 +29,14 @@ export const CommonPhotos = ({ selectPhoto, isLookingMyPhotos }: CommonPhotosTyp
 
   return (
     <>
-      <UserTitle user="Common" />
+      <Title user="Common" />
       <div className="common-photo-wrapper">
         <ul className={styleWrapperPhotos}>
-          <Photo
-            isLookingMyPhotos={isLookingMyPhotos}
-            setSelectedPhoto={selectPhoto.setSelectedPhoto}
-            photos={commonPhotos}
-          />
+          <Photo setSelectedPhoto={setSelectedPhoto} photos={commonPhotos} />
         </ul>
       </div>
-      {selectPhoto.selectedPhotoUrl && (
-        <SelectedPhoto
-          selectedPhotoUrl={selectPhoto.selectedPhotoUrl}
-          setSelectedPhoto={selectPhoto.setSelectedPhoto}
-        />
+      {selectedPhotoUrl && (
+        <SelectedPhoto selectedPhotoUrl={selectedPhotoUrl} setSelectedPhoto={setSelectedPhoto} />
       )}
     </>
   );

@@ -1,0 +1,25 @@
+header {
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  height: 60px;
+  display: flex;
+  border-bottom: 1px solid rgba(151, 132, 132, 0.5);
+  background-color: #ffffff;
+  z-index: 100;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  min-width: 40px;
+}

@@ -1,4 +1,4 @@
-import './switch.css';
+import './switcher.css';
 
 type SwitchTypes = {
   isOn: boolean;
@@ -6,7 +6,7 @@ type SwitchTypes = {
   onColor: string;
 };
 
-export const Switch = ({ isOn, handleToggle, onColor }: SwitchTypes) => (
+export const Switcher = ({ isOn, handleToggle, onColor }: SwitchTypes) => (
   <>
     <input
       checked={isOn}

@@ -47,7 +47,10 @@ export const PhotoLoader = ({ destination, children }: PhotoLoaderTypes) => {
     <>
       <div className="wrapper-input">
         <input className="inputfile" type="file" onChange={handleChange} id="inputImage" />
-        <label className="inputImage" htmlFor="inputImage">
+        <label
+          className={destination === 'profileAvatar' ? 'profile-image-loader' : 'main-image-loader'}
+          htmlFor="inputImage"
+        >
           {children}
         </label>
       </div>

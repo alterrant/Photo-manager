@@ -84,7 +84,7 @@ export const UpdateProfileForm = () => {
 
         <div className="profile-avatar-container">
           <PhotoLoader destination="profileAvatar">
-            <ProfileAvatar />
+            <ProfileAvatar avatarModifier="pencil" />
           </PhotoLoader>
         </div>
 

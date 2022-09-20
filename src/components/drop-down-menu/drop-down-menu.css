@@ -1,0 +1,87 @@
+.drop-down-menu-wrapper {
+  min-width: 40px;
+  height: 40px;
+  position: relative;
+}
+.drop-down-menu-button {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+.drop-down-menu-button:focus {
+  outline: none;
+}
+
+.drop-down-menu-container {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  /*max-width: 200px;*/
+  width: calc(8vw);
+  min-width: max-content;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 rgba(51, 51, 94, 0.3);
+  white-space: pre;
+  font-family: Poppins-Regular;
+}
+.drop-down-menu__first-item:before, .drop-down-menu__first-item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -5px;
+  right: 15px;
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  transform: rotate(45deg);
+}
+.drop-down-menu__first-item:after {
+  z-index: -1;
+  box-shadow: 0 0 8px 0 rgba(51, 51, 94, 0.3);
+}
+.drop-down-menu__first-item:before {
+  z-index: 1;
+}
+.drop-down-menu__item {
+  cursor: pointer;
+  transition: background-color 0.65s;
+}
+.drop-down-menu__last-item {
+  display: flex;
+  justify-content: center;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding: 4px 10px 5px 10px;
+}
+.drop-down-menu__last-item:hover {
+  background-color: #b1b1b1;
+}
+.drop-down-menu__first-item {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  min-height: 7px;
+}
+/*Опционально: затемнение первой строки при наведении
+.drop-down-menu__first-item:hover,
+.drop-down-menu__first-item:hover:before {
+  background-color: #b1b1b1;
+}
+*/
+
+.drop-down-menu__divide-line {
+  margin: 0;
+  border: none;
+  content: "";
+  height: 1px;
+  background-color: #b1b1b1;
+}
+
+@media screen and (min-width: 2000px) {
+  .drop-down-menu-container {
+    width: 200px;
+  }
+}
