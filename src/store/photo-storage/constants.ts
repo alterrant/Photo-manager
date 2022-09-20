@@ -11,6 +11,8 @@ export const DOC_PATH = {
 
   getCommonPath: () => DOC_PATH._COMMON_PATH,
   getUserPath: (userId: string) => DOC_PATH._USER_PATH + userId,
-  getUserPhotosPath: (userId: string) => (imageName: string) =>
-    `${DOC_PATH.getUserPath(userId)}/${imageName}`,
+  getUserPhotosStoragePath: (userId: string) => (imageName: string) =>
+    `${DOC_PATH.getUserPath(userId)}/photos/${imageName}`,
+  getUserPhotosFirebasePath: (userId: string) =>
+    `${DOC_PATH.getUserPath(userId)}/photos/photosCollection/`,
 };

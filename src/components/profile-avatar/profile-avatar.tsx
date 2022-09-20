@@ -7,12 +7,18 @@ import { auth } from '../../selectors';
 import { useAppSelector } from '../../hooks/react-redux';
 import defaultAvatarUrl from './assets/default-avatar.svg';
 import photoChanger from './assets/photo-changer.svg';
+import downArrow from './assets/down-arrow.svg';
 
 import './profile-avatar.css';
 
-export const ProfileAvatar = () => {
+type ProfileAvatarTypes = {
+  avatarModifier?: 'downArrow' | 'pencil';
+};
+
+export const ProfileAvatar = ({ avatarModifier }: ProfileAvatarTypes) => {
   const [avatarUrl, setAvatarUrl] = useState<string>('');
   const { authUserProfile } = useAppSelector(auth);
+  const isPencilModifier = avatarModifier === 'pencil';
 
   useEffect(() => {
     return onSnapshot(
@@ -34,7 +40,13 @@ export const ProfileAvatar = () => {
         src={avatarUrl || (defaultAvatarUrl as string)}
         alt="profile-avatar"
       />
-      <img className="avatar-changer" src={photoChanger as string} alt="avatar-changer" />
+      {avatarModifier && (
+        <img
+          className={`avatar-modifier modifier-${avatarModifier}`}
+          src={isPencilModifier ? (photoChanger as string) : (downArrow as string)}
+          alt="avatar-modifier"
+        />
+      )}
     </div>
   );
 };

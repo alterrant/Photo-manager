@@ -14,9 +14,5 @@ export const CloseSvgContainer = ({ imageName, imageFirebaseId }: CloseSvgContai
   const handleDeletePhoto = () =>
     dispatch(deletePhotoAttempt({ userId, imageName, imageFirebaseId }));
 
-  return (
-    <div onClick={handleDeletePhoto}>
-      <CloseSvg />
-    </div>
-  );
+  return <CloseSvg onClick={handleDeletePhoto} />;
 };

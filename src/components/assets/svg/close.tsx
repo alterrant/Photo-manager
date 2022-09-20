@@ -1,8 +1,13 @@
 import { motion } from 'framer-motion';
 
-export const CloseSvg = () => (
+type CloseSvgTypes = {
+  onClick: () => void;
+};
+
+export const CloseSvg = ({ onClick }: CloseSvgTypes) => (
   <motion.svg
     className="delete-picture"
+    onClick={onClick}
     opacity={0.7}
     whileHover={{ opacity: 1 }}
     xmlns="http://www.w3.org/2000/svg"

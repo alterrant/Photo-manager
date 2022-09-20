@@ -35,7 +35,7 @@ export const authObserver = ({
 
       switch (path) {
         case '/auth': {
-          navigate('/');
+          navigate('/my-photos');
           break;
         }
         case '/registration': {
@@ -43,7 +43,12 @@ export const authObserver = ({
           break;
         }
         case '/update-profile':
+        case '/my-photos':
+        case '/common-photos': {
+          break;
+        }
         case '/': {
+          navigate('/my-photos');
           break;
         }
         default: {

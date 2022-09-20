@@ -2,10 +2,9 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { Photo } from './photo';
 import { useFirestoreGetUserPhotos } from '../../hooks/use-firestore';
-import { SelectedPhotoUrl } from '../main/main';
+import { SelectedPhotoUrl } from '../../types/select-photo';
 
 type PhotosType = {
-  isLookingMyPhotos: boolean;
   setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
 };
 

@@ -41,13 +41,14 @@ function* deletePhotoWorker({ payload }: PayloadAction<DeleteUserPhotoType>): Ge
   const { userId, imageName, imageFirebaseId } = payload;
 
   try {
-    const userPhotosReference = ref(storage, DOC_PATH.getUserPhotosPath(userId)(imageName));
+    const userPhotosReference = ref(storage, DOC_PATH.getUserPhotosStoragePath(userId)(imageName));
     // удаляем из fireStore
     yield call(deleteObject, userPhotosReference);
     // удаляем ссылку на файл из fireBase юзера и общих фотографий
+
     yield call(
       deleteDoc,
-      doc(projectFirestore, DOC_PATH.getUserPath(userId), `${imageFirebaseId}`)
+      doc(projectFirestore, DOC_PATH.getUserPhotosFirebasePath(userId), `${imageFirebaseId}`)
     );
     yield call(deleteDoc, doc(projectFirestore, DOC_PATH.getCommonPath(), `${imageFirebaseId}`));
     yield put(deletePhotoSuccess());

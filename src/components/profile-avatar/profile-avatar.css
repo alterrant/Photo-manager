@@ -5,7 +5,6 @@
 
 .avatar-img-container {
   position: relative;
-  width: 142px;
 }
 
 .avatar-img-container:after {
@@ -25,25 +24,30 @@
   object-fit: cover;
 }
 
-.avatar-changer {
+.modifier-pencil {
   width: 20px;
   height:20px;
+  opacity: 0.4;
+}
+.modifier-downArrow {
+  width: 6px;
+  height:6px;
+  opacity: 0.5;
+}
+.avatar-modifier {
   position: absolute;
   bottom: 0;
   right: 0;
-  opacity: 0.4;
+
   transition: opacity 0.2s linear;
 }
 
-.avatar-img-container:hover .avatar-changer {
+.avatar-img-container:hover .avatar-modifier {
   opacity: 1;
 }
 
 @media screen and (max-width: 150px) {
-  .avatar-img-container {
-    width: 100vw;
-  }
-  .avatar-changer {
+  .modifier-pencil {
     width: 16vw;
     height:16vw;
   }

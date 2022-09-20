@@ -8,11 +8,16 @@ html {
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: Montserrat-Medium, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(243, 241, 241);
+    /*font-family: Montserrat-Medium;*/
+    /*font-family: Montserrat-SemiBold;*/
+    /*font-family: Consolas;*/
+    /*font-family: Poppins-Regular;*/
 }
 
 code {
@@ -50,16 +55,16 @@ input {
 }
 
 .main-wrapper {
-    max-width: 960px;
-    margin: 10px auto;
     display: flex;
     flex-direction: column;
+    row-gap: 15px;
 }
 
 ul,
 li {
     margin: 0;
     padding: 0;
+    list-style-type: none;
 }
 
 .photos-wrapper {
@@ -73,7 +78,7 @@ li {
     display: grid;
     grid-template-columns: 1fr;
     margin: 20px auto;
-    max-width: 80vh;
+    max-width: 72vh;
 }
 
 .two-photo-grid {
@@ -104,6 +109,7 @@ li {
 .image-wrapper img {
     /* У некоторых фото изменяются размеры при перезагрузки страницы
     min-width: 100%;*/
+    object-fit: cover;
     min-width: 100%;
     min-height: 100%;
     max-width: 100%;
@@ -297,7 +303,7 @@ li {
 
 .GitHubSVG {
     margin-right: 2px;
-    width: 32px;
+    width: 40px;
     transition-duration: 0.3s;
     display: flex;
     justify-content: center;
@@ -341,37 +347,22 @@ li {
     color: rgba(231, 32, 95, 0.56);
     font-size: 17px;
 }
-
-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.switchPhotosWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.buttonLogOut {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.profile-image-loader {
     cursor: pointer;
-
-    background-color: #e6f1fa;
-    border: 1px solid #1f3249;
-    border-radius: 6px;
-    outline: none;
-    box-shadow: 3px 3px 3px rgba(90, 81, 90, 0.49);
-    transition-duration: 0.275s;
+    width: 142px;
 }
-.inputImage {
+.main-image-loader {
     cursor: pointer;
+}
+
+@media screen and (max-width: 150px) {
+  .profile-image-loader {
+    width: 100vw;
+  }
 }
 
 .common-photo-wrapper {
-    margin-top: 28px;
+    margin: 28px 0;
 }
 
 input[type="password"]::-ms-reveal {
