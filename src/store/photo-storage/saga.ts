@@ -61,13 +61,12 @@ function* firestorePhotosWorker({
   payload,
 }: PayloadAction<FirestoreSubscribeTypes>): Generator<StrictEffect> {
   const { path, setStatePhotos } = payload;
-  const { photos, isSubscribedUserPhotos, isSubscribedCommonPhotos } = (yield select(
+  const { isSubscribedUserPhotos, isSubscribedCommonPhotos } = (yield select(
     photoStorage
   )) as PhotoStorageStateTypes;
 
   const unsubscribe = (yield call(getSnapshotPhotos, {
     path,
-    photos,
     setStatePhotos,
   })) as Unsubscribe;
 

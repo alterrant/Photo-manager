@@ -6,7 +6,6 @@ import { projectFirestore, storage } from '../../firebase/config';
 import {
   AddUserPhotoType,
   FirestoreSubscribeTypes,
-  PhotoType,
   SnapshotPhotos,
   SnapshotPhotosData,
 } from './types';
@@ -74,11 +73,7 @@ const sortAndSerializePhotos = (unsortedPhotos: SnapshotPhotos[]) => {
   return sortPhotos(serializedPhotos);
 };
 
-type GetSnapshotPhotos = {
-  photos: PhotoType;
-} & FirestoreSubscribeTypes;
-
-export const getSnapshotPhotos = ({ path, photos, setStatePhotos }: GetSnapshotPhotos) => {
+export const getSnapshotPhotos = ({ path, setStatePhotos }: FirestoreSubscribeTypes) => {
   const snapshotPhotos: SnapshotPhotos[] = [];
 
   return onSnapshot(collection(projectFirestore, path), querySnapshot => {
