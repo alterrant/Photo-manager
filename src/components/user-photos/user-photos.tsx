@@ -2,23 +2,22 @@ import { useState } from 'react';
 import { Title } from '../titile';
 import { PhotoLoader } from '../photo-loader';
 import { Photos } from '../photos';
-import { SelectedPhoto } from '../selected-photo';
-import { SelectedPhotoUrl } from '../../types/select-photo';
+import { SelectedPhotoId } from '../../types/select-photo';
 import { SVGLoader } from '../assets/svg/loader';
+import { PhotosCarousel } from '../photos-carousel';
 
 export const UserPhotos = () => {
-  const [selectedPhotoUrl, setSelectedPhoto] = useState<SelectedPhotoUrl>(null);
+  const [selectedPhotoId, setSelectedPhotoId] = useState<SelectedPhotoId>(null);
 
   return (
     <>
       <Title />
-      {/* <PhotoLoader fill={"#8A2BE2"} stroke={"#8A2BE2"}/> */}
       <PhotoLoader destination="photos">
         <SVGLoader />
       </PhotoLoader>
-      <Photos setSelectedPhoto={setSelectedPhoto} />
-      {selectedPhotoUrl && (
-        <SelectedPhoto selectedPhotoUrl={selectedPhotoUrl} setSelectedPhoto={setSelectedPhoto} />
+      <Photos setSelectedPhotoId={setSelectedPhotoId} />
+      {selectedPhotoId && (
+        <PhotosCarousel initialSlide={selectedPhotoId} setSelectedPhotoId={setSelectedPhotoId} />
       )}
     </>
   );

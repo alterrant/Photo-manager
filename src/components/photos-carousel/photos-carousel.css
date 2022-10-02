@@ -1,0 +1,11 @@
+.swiper-checkbox {
+  position: absolute;
+  top: 1.1vw;
+  right: 1.1vw;
+  width: 1.5vw;
+  height: 1.5vw;
+  border-radius: .5vw;
+}
+.photo-carousel-background {
+  background-color: rgba(0,0,0,.5);
+}

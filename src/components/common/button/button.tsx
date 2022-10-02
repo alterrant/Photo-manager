@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
 import { Preloader } from '../preloader';
@@ -16,31 +16,39 @@ type ButtonType = {
   classImg?: string;
   src?: string;
   loading?: boolean;
+  children?: ReactNode;
 };
 
-export const Button = ({
-  buttonText,
-  disabled = false,
-  onClick,
-  type = BUTTON_TYPES.BUTTON,
-  classText,
-  classButton,
-  classImg,
-  src,
-  loading,
-}: ButtonType) => {
-  const buttonStyle = classNames(classButton, 'button');
+export const Button = React.forwardRef<HTMLButtonElement, ButtonType>(
+  (
+    {
+      buttonText,
+      disabled = false,
+      onClick,
+      type = BUTTON_TYPES.BUTTON,
+      classText,
+      classButton,
+      classImg,
+      src,
+      loading,
+      children,
+    },
+    ref
+  ) => {
+    const buttonStyle = classNames(classButton, 'button');
 
-  return (
-    <button className={buttonStyle} disabled={disabled} onClick={onClick} type={type}>
-      {loading ? (
-        <Preloader />
-      ) : (
-        <>
-          {buttonText && <span className={classText}>{buttonText}</span>}
-          {src && <img className={classImg} src={src} alt="img" />}
-        </>
-      )}
-    </button>
-  );
-};
+    return (
+      <button ref={ref} className={buttonStyle} disabled={disabled} onClick={onClick} type={type}>
+        {loading ? (
+          <Preloader />
+        ) : (
+          <>
+            {buttonText && <span className={classText}>{buttonText}</span>}
+            {src && <img className={classImg} src={src} alt="img" />}
+            {children}
+          </>
+        )}
+      </button>
+    );
+  }
+);

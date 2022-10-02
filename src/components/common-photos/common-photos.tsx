@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useFirestoreGetCommonPhotos } from '../../hooks/use-firestore';
 import { Title } from '../titile';
 import { Photo } from '../photos/photo';
-import { SelectedPhoto } from '../selected-photo';
-import { SelectedPhotoUrl } from '../../types/select-photo';
+import { SelectedPhotoId } from '../../types/select-photo';
+import { PhotosCarousel } from '../photos-carousel';
 
 export const CommonPhotos = () => {
   let styleWrapperPhotos;
   const isOnePhoto = 'one-photo-grid';
   const isTwoPhoto = 'two-photo-grid';
-  const [selectedPhotoUrl, setSelectedPhoto] = useState<SelectedPhotoUrl>(null);
+  const [selectedPhotoId, setSelectedPhotoId] = useState<SelectedPhotoId>(null);
 
   const commonPhotos = useFirestoreGetCommonPhotos();
 
@@ -32,11 +32,11 @@ export const CommonPhotos = () => {
       <Title user="Common" />
       <div className="common-photo-wrapper">
         <ul className={styleWrapperPhotos}>
-          <Photo setSelectedPhoto={setSelectedPhoto} photos={commonPhotos} />
+          <Photo setSelectedPhotoId={setSelectedPhotoId} photos={commonPhotos} />
         </ul>
       </div>
-      {selectedPhotoUrl && (
-        <SelectedPhoto selectedPhotoUrl={selectedPhotoUrl} setSelectedPhoto={setSelectedPhoto} />
+      {selectedPhotoId && (
+        <PhotosCarousel initialSlide={selectedPhotoId} setSelectedPhotoId={setSelectedPhotoId} />
       )}
     </>
   );

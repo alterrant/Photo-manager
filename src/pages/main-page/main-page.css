@@ -4,3 +4,73 @@ main {
   width: 100%;
   margin: 0 auto;
 }
+
+.swiper-arrow__img_reverse {
+  transform: rotateY(180grad);
+}
+.swiper-arrow__img {
+  width: 100%;
+  height: 100%;
+}
+.swiper-arrow {
+  position: fixed;
+  top:50%;
+  transform: translateY(-50%);
+  width: calc(7vw);
+  height: 100vh;
+
+  transition: opacity .5s, backgroung .5s;
+  opacity: 0;
+  z-index: 15;
+  /*background-color: rgba(0,0,0,.5); - swiper-container*/
+}
+.swiper-arrow__prev {
+  left: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,.7));
+}
+.swiper-arrow__next {
+   right: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,.7));
+ }
+.swiper-arrow__prev:hover,
+.swiper-arrow__next:hover {
+  opacity: 1;
+}
+
+/*.swiper-button-disabled {
+  display: none;
+}*/
+/*Восстановилено из sass min*/
+.swiper-scrollbar {
+  border-radius:10px;
+  position:relative;
+  -ms-touch-action:none;
+  background:rgba(0,0,0,.1);
+}
+/*.swiper-scrollbar-disabled > .swiper-scrollbar,
+.swiper-scrollbar .swiper-scrollbar-disabled {
+  display:none !important;
+}*/
+.swiper-horizontal > .swiper-scrollbar,
+.swiper-scrollbar .swiper-scrollbar-horizontal {
+  position:absolute;
+  left: 1%;
+  bottom:0;
+  z-index:50;
+  /*height:5px;*/
+  height: 0.3vw;
+  width: 98%;
+}
+.swiper-scrollbar-drag {
+  height:100%;
+  width:100%;
+  position:relative;
+  /*background:rgba(0,0,0,.5);*/
+  background: rgba(255, 255, 255, 0.5);
+  border-radius:10px;
+  left:0;
+  top:0;
+}
+.swiper-scrollbar-cursor-drag {
+  cursor:move;
+}

@@ -17,7 +17,7 @@ export const SwitchPhotos = () => {
   return (
     <div className="switchPhotosWrapper">
       <Switcher
-        isOn={isLookingMyPhotos}
+        isOn={!isLookingMyPhotos}
         onColor="#7366bd"
         handleToggle={() => {
           navigate('/my-photos');

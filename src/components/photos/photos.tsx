@@ -2,10 +2,10 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { Photo } from './photo';
 import { useFirestoreGetUserPhotos } from '../../hooks/use-firestore';
-import { SelectedPhotoUrl } from '../../types/select-photo';
+import { SelectedPhotoId } from '../../types/select-photo';
 
 type PhotosType = {
-  setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
+  setSelectedPhotoId: Dispatch<SetStateAction<SelectedPhotoId>>;
 };
 
 export const Photos = (properties: PhotosType) => {

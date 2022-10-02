@@ -3,15 +3,15 @@ import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CloseSvgContainer } from './close-svg-container';
-import { SelectedPhotoUrl } from '../../../types/select-photo';
+import { SelectedPhotoId } from '../../../types/select-photo';
 import { PhotoType } from '../../../store/photo-storage/types';
 
 type PhotoTypes = {
-  setSelectedPhoto: Dispatch<SetStateAction<SelectedPhotoUrl>>;
+  setSelectedPhotoId: Dispatch<SetStateAction<SelectedPhotoId>>;
   photos: PhotoType;
 };
 
-export const Photo = ({ setSelectedPhoto, photos }: PhotoTypes) => {
+export const Photo = ({ setSelectedPhotoId, photos }: PhotoTypes) => {
   const location = useLocation().pathname;
 
   return (
@@ -31,7 +31,7 @@ export const Photo = ({ setSelectedPhoto, photos }: PhotoTypes) => {
             <CloseSvgContainer imageName={item.name} imageFirebaseId={item.id} />
           )}
           <img
-            onClick={() => setSelectedPhoto(item.imageUrl)}
+            onClick={() => setSelectedPhotoId(item.id)}
             src={item.imageUrl}
             alt="imageFromBase"
           />
