@@ -77,6 +77,7 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
             alt={photo.name}
             onClick={() => {
               if (!isBottomSwiper) setThumbsVisible(!isThumbsVisible);
+              if (isBottomSwiper && selectedPhotos.length > 0) handleSelectPhotos(photo);
             }}
           />
         </div>
