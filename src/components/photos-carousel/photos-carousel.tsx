@@ -89,16 +89,6 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
     element.classList.add('swiper-slide-thumb-active');
   }, [initialSlideIndex]);
 
-  /* useEffect(() => {
-    const element = document.querySelector('.modal');
-
-    if (element) {
-      if (isThumbsVisible) element.classList.add('swiper-thumbs-container-hidden');
-      else element.classList.remove('swiper-thumbs-container-hidden');
-      // element.classList.toggle('swiper-thumbs-container-hidden');
-    }
-  }, [isThumbsVisible]); */
-
   if (isModalOpened) {
     return (
       <Modal
@@ -135,7 +125,8 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
         <div
           className={classNames(
             'swiper-thumbs-container',
-            !isThumbsVisible && 'swiper-thumbs-container-hidden'
+            !isThumbsVisible && 'swiper-thumbs-container-hidden',
+            selectedPhotos.length > 0 && 'swiper-thumbs-disable-animation'
           )}
         >
           <Swiper
