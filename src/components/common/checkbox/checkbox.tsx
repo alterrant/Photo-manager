@@ -6,14 +6,20 @@ type CheckboxTypes = {
   changeHandler: () => void;
   isChecked: boolean;
   className?: string;
+  vectorColor?: string;
 };
 
-export const Checkbox = ({ isChecked, changeHandler, className }: CheckboxTypes) => {
-  const checkboxStyle = classNames('checkbox', className, { checkboxActive: isChecked });
+export const Checkbox = ({
+  isChecked,
+  changeHandler,
+  className,
+  vectorColor = 'rgba(18, 18, 18, 1)',
+}: CheckboxTypes) => {
+  const checkboxStyle = classNames('checkbox', className, { 'checkbox-active': isChecked });
 
   return (
     <label className={checkboxStyle}>
-      <Vector isActive={isChecked} />
+      <Vector isActive={isChecked} color={vectorColor} />
       <input
         type="checkbox"
         checked={isChecked}
@@ -24,7 +30,7 @@ export const Checkbox = ({ isChecked, changeHandler, className }: CheckboxTypes)
   );
 };
 
-const Vector = ({ isActive }: { isActive: boolean }) => {
+const Vector = ({ isActive, color }: { isActive: boolean; color: string }) => {
   return (
     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -38,7 +44,7 @@ const Vector = ({ isActive }: { isActive: boolean }) => {
              3.20987C1.41296 3.20805 1.61504 3.28869 1.76593 3.43441L4.40033 6.06881L10.2347 0.234412C10.3847
               0.0844356 10.5882 0.000183105 10.8003 0.000183105C11.0125 0.000183105 11.2159 0.0844356 11.3659
                0.234412Z"
-        fill={isActive ? '#121212' : 'none'}
+        fill={isActive ? color : 'none'}
       />
     </svg>
   );

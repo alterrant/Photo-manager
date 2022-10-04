@@ -7,21 +7,27 @@
   white-space: nowrap;
   width: 1px;
 }
+
 .checkbox {
   height: 18px;
   width: 18px;
   background: #FFFFFF;;
-  border: .2vw solid #E6E6E6;
+  border: .1vw solid #E6E6E6;
   cursor: pointer;
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.checkbox:hover {
-  border: .2vw solid #121212;
+.checkbox > svg {
+  width: 100%;
+  height: 100%;
+  padding: 10%;
 }
-
-.checkboxActive {
+/*.checkbox:hover {
   border: .2vw solid #121212;
+}*/
+.checkbox-active {
+  opacity: 1 !important;
+  /*border: .2vw solid #121212;*/
 }

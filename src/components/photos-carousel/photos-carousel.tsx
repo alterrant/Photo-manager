@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Swiper as SwiperInterface, Thumbs } from 'swiper';
+import classNames from 'classnames';
 import {
   SWIPER_ARROWS,
   SWIPER_NAVIGATION_BUTTONS,
@@ -32,6 +33,11 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
   const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>(isModalOpened);
   const [prevEl, prevElRef] = useSwiperRef<HTMLButtonElement>(isModalOpened);
   const [selectedPhotos, setSelectedPhotos] = useState<string[]>([]);
+  const [isThumbsVisible, setThumbsVisible] = useState<boolean>(true);
+
+  const checkboxStyle = classNames('swiper-checkbox', {
+    'checkbox-triggered': selectedPhotos.length > 0,
+  });
 
   const initialSlideIndex = photos.findIndex(photo => photo.id === initialSlide);
 
@@ -51,21 +57,47 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
 
   const handleCheckCheckbox = (photo: SnapshotPhotos) => selectedPhotos.includes(photo.id);
 
-  const getSwiperSlides = (swiperName: string) =>
-    photos.map(photo => (
-      <SwiperSlide key={photo.id}>
+  const getSwiperSlides = (swiperName: string) => {
+    const isBottomSwiper = swiperName === SWIPER_NAMES.BOTTOM_SWIPER;
+
+    return photos.map(photo => (
+      <SwiperSlide key={photo.id} className={classNames({ 'swiper-slide-thumb': isBottomSwiper })}>
         <div className="swiper-img-wrapper">
-          <img className="swiper-img" src={photo.imageUrl} alt={photo.name} />
-          {swiperName === SWIPER_NAMES.BOTTOM_SWIPER && (
+          {isBottomSwiper && (
             <Checkbox
               changeHandler={() => handleSelectPhotos(photo)}
               isChecked={handleCheckCheckbox(photo)}
-              className="swiper-checkbox"
+              className={checkboxStyle}
+              vectorColor="rgba(255, 255, 255, 1)"
             />
           )}
+          <img
+            className="swiper-img"
+            src={photo.imageUrl}
+            alt={photo.name}
+            onClick={() => {
+              if (!isBottomSwiper) setThumbsVisible(!isThumbsVisible);
+            }}
+          />
         </div>
       </SwiperSlide>
     ));
+  };
+
+  useEffect(() => {
+    const element = document.querySelectorAll('.swiper-slide-thumb').item(initialSlideIndex);
+    element.classList.add('swiper-slide-thumb-active');
+  }, [initialSlideIndex]);
+
+  /* useEffect(() => {
+    const element = document.querySelector('.modal');
+
+    if (element) {
+      if (isThumbsVisible) element.classList.add('swiper-thumbs-container-hidden');
+      else element.classList.remove('swiper-thumbs-container-hidden');
+      // element.classList.toggle('swiper-thumbs-container-hidden');
+    }
+  }, [isThumbsVisible]); */
 
   if (isModalOpened) {
     return (
@@ -101,19 +133,10 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
           ))}
         </div>
         <div
-          className={
-            photos.length === 1
-              ? 'test-width test-width-one'
-              : photos.length === 2
-              ? 'test-width test-width-two'
-              : photos.length === 3
-              ? 'test-width test-width-three'
-              : photos.length === 4
-              ? 'test-width test-width-four'
-              : photos.length === 5
-              ? 'test-width test-width-five'
-              : 'test-width other'
-          }
+          className={classNames(
+            'swiper-thumbs-container',
+            !isThumbsVisible && 'swiper-thumbs-container-hidden'
+          )}
         >
           <Swiper
             onSwiper={setSwiperInstance}

@@ -6,8 +6,6 @@
   row-gap: 3vh;
   column-gap: 3vw;
   grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
-  /*grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
-  align-content: center;*/
   align-items: center;
   justify-items: stretch;
 }
