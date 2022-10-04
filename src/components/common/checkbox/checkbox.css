@@ -1,0 +1,33 @@
+.hidden-input {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.checkbox {
+  height: 18px;
+  width: 18px;
+  background: #FFFFFF;;
+  border: .1vw solid #E6E6E6;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkbox > svg {
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+}
+/*.checkbox:hover {
+  border: .2vw solid #121212;
+}*/
+.checkbox-active {
+  opacity: 1 !important;
+  /*border: .2vw solid #121212;*/
+}

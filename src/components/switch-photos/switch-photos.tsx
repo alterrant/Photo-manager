@@ -1,18 +1,13 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Switcher } from '../common/switcher';
 
 import './switch-photos.css';
 
-type SwitchPhotosTypes = {
-  isLookingMyPhotos: boolean;
-  watchPhotosToggle: Dispatch<SetStateAction<boolean>>;
-};
-
-export const SwitchPhotos = ({ isLookingMyPhotos, watchPhotosToggle }: SwitchPhotosTypes) => {
+export const SwitchPhotos = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  const isLookingMyPhotos = location === '/my-photos';
 
   const toggleHandler = () => {
     if (location === '/my-photos') navigate('/common-photos');
@@ -22,12 +17,11 @@ export const SwitchPhotos = ({ isLookingMyPhotos, watchPhotosToggle }: SwitchPho
   return (
     <div className="switchPhotosWrapper">
       <Switcher
-        isOn={isLookingMyPhotos}
+        isOn={!isLookingMyPhotos}
         onColor="#7366bd"
         handleToggle={() => {
           navigate('/my-photos');
           toggleHandler();
-          watchPhotosToggle(!isLookingMyPhotos);
         }}
       />
       <p className="switchPhotosLabel">

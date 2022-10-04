@@ -8,7 +8,7 @@ export const CloseSvg = ({ onClick }: CloseSvgTypes) => (
   <motion.svg
     className="delete-picture"
     onClick={onClick}
-    opacity={0.7}
+    opacity={0.5}
     whileHover={{ opacity: 1 }}
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"

@@ -45,6 +45,8 @@
         "arrow-parens": "off",
         "multiline-ternary": "off",
         "no-underscore-dangle": "off",
+        "consistent-return": "off",
+        "react/display-name": "off",
 
         "import/no-unresolved": "error",
         "import/prefer-default-export": "off",
@@ -75,6 +77,8 @@
         "unicorn/no-array-for-each": "off",
         "unicorn/prefer-spread": "off",
         "unicorn/prevent-abbreviations": "off",
+        "unicorn/prefer-dom-node-remove": "off",
+        "unicorn/no-nested-ternary": "off",
 
         "@typescript-eslint/indent": "off",
         "@typescript-eslint/semi": "off",

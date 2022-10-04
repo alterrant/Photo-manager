@@ -1,0 +1,21 @@
+.modal {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.modal__close {
+  position: absolute;
+  right: 1vw;
+  top: 1vh;
+  height: 4.5vw;
+  width: 4.5vw;
+  z-index: 50;
+  opacity: .5;
+  transition: .3s;
+}
+.modal__close:hover {
+  opacity: 1;
+}
