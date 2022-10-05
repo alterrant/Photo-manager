@@ -1,13 +1,14 @@
 .selected-photos_container {
   overflow-y: auto;
-  padding: 10vw;
+  padding: 5vh 10vw;
   height: 100%;
   display: grid;
   row-gap: 3vh;
   column-gap: 3vw;
   grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  grid-template-rows: minmax(auto, 100%);
   align-items: center;
-  justify-items: stretch;
+  justify-items: center;
 }
 .selected-photos_img-wrapper {
   width:100%;

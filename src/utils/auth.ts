@@ -56,6 +56,6 @@ export const authObserver = ({
           break;
         }
       }
-    } else if (path === '/') navigate('/auth');
+    } else if (path !== '/registration') navigate('/auth');
   });
 };
