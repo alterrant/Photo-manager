@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Scrollbar, Swiper as SwiperInterface, Thumbs } from 'swiper';
+import { Navigation, Scrollbar, Keyboard, Swiper as SwiperInterface, Thumbs } from 'swiper';
 import classNames from 'classnames';
 import {
   SWIPER_ARROWS,
@@ -42,7 +42,8 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
   const initialSlideIndex = photos.findIndex(photo => photo.id === initialSlide);
 
   const handleCloseModal = () => {
-    setSelectedPhotoId(null);
+    if (selectedPhotos.length > 0) setSelectedPhotos([]);
+    else setSelectedPhotoId(null);
   };
 
   const handleSelectPhotos = (photo: SnapshotPhotos) => {
@@ -102,7 +103,8 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
             slidesPerView={1}
             initialSlide={initialSlideIndex}
             spaceBetween={20}
-            modules={[Navigation, Thumbs]}
+            keyboard
+            modules={[Navigation, Thumbs, Keyboard]}
             thumbs={{
               swiper: swiperInstance,
             }}
@@ -136,6 +138,7 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
             grabCursor
             initialSlide={initialSlideIndex}
             slidesPerView="auto"
+            keyboard
             observer
             observeParents
             observeSlideChildren
@@ -144,12 +147,17 @@ export const PhotosCarousel = ({ initialSlide, setSelectedPhotoId }: PhotosCarou
               draggable: true,
               snapOnRelease: true,
             }}
-            modules={[Navigation, Thumbs, Scrollbar]}
+            modules={[Navigation, Thumbs, Scrollbar, Keyboard]}
           >
             {getSwiperSlides(SWIPER_NAMES.BOTTOM_SWIPER)}
           </Swiper>
         </div>
-        <SelectedPhotos selectedPhotos={selectedPhotos} />
+        <SelectedPhotos
+          onClick={() => {
+            setThumbsVisible(!isThumbsVisible);
+          }}
+          selectedPhotos={selectedPhotos}
+        />
       </Modal>
     );
   }
