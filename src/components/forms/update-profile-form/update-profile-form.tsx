@@ -100,7 +100,7 @@ export const UpdateProfileForm = () => {
           <Button
             classButton="auth-submit-button"
             type="submit"
-            buttonText="Create account"
+            buttonText="Update profile"
             disabled={isLoading}
           />
         </div>
@@ -111,7 +111,7 @@ export const UpdateProfileForm = () => {
             onClick={() => navigate('/')}
             whileHover={{ color: 'rgb(78,65,113)' }}
           >
-            Complete profile later
+            Update profile later
           </motion.span>
         </div>
       </form>

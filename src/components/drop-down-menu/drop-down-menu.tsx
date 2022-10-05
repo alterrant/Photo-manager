@@ -1,21 +1,36 @@
 import { useState, ReactNode, useRef, useEffect } from 'react';
-
-import { logOut } from '../../store/auth';
-import { useAppDispatch } from '../../hooks/react-redux';
+import classNames from 'classnames';
 
 import './drop-down-menu.css';
 
+type MenuListItem = {
+  id: number;
+  text: string;
+  clickHandler: () => void;
+};
 type DropDownMenuTypes = {
   children: ReactNode;
+  menuList: MenuListItem[];
 };
 
-export const DropDownMenu = ({ children }: DropDownMenuTypes) => {
+export const DropDownMenu = ({ children, menuList }: DropDownMenuTypes) => {
   const dropDownMenuRef = useRef<HTMLDivElement>(null);
-
-  const dispatch = useAppDispatch();
   const [dropDownState, setDropDownState] = useState({ open: false });
 
   const handleDropDownClick = () => setDropDownState({ open: !dropDownState.open });
+
+  const menuLists = menuList.map((item, index) => (
+    <li
+      key={item.id}
+      onClick={item.clickHandler}
+      className={classNames(
+        'drop-down-menu__item',
+        index === menuList.length - 1 && 'drop-down-menu__last-item'
+      )}
+    >
+      {item.text}
+    </li>
+  ));
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -47,12 +62,7 @@ export const DropDownMenu = ({ children }: DropDownMenuTypes) => {
         <ul className="drop-down-menu-container">
           <li className="drop-down-menu__first-item" />
           <hr className="drop-down-menu__divide-line" />
-          <li
-            onClick={() => dispatch(logOut())}
-            className="drop-down-menu__last-item drop-down-menu__item"
-          >
-            Sign Out
-          </li>
+          {menuLists}
         </ul>
       )}
     </div>

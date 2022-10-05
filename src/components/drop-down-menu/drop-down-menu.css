@@ -47,19 +47,24 @@
   z-index: 1;
 }
 .drop-down-menu__item {
-  cursor: pointer;
-  transition: background-color 0.65s;
-}
-.drop-down-menu__last-item {
   display: flex;
   justify-content: center;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
   padding: 4px 10px 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.65s;
+  font-size: 20px;
 }
-.drop-down-menu__last-item:hover {
+.drop-down-menu__item:hover {
   background-color: #b1b1b1;
 }
+.drop-down-menu__last-item {
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+
+}
+/*.drop-down-menu__last-item:hover {
+  background-color: #b1b1b1;
+}*/
 .drop-down-menu__first-item {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
