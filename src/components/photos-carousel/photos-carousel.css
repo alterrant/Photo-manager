@@ -132,8 +132,17 @@
   height: 100vh;
 
   transition: opacity .5s, backgroung .5s;
+  animation: hide-arrows .8s normal none;
   opacity: 0;
   z-index: 15;
+}
+@keyframes hide-arrows {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 .swiper-arrow__prev {
   left: 0;
@@ -150,6 +159,7 @@
 .swiper-button-disabled {
   display: none;
 }
+
 /*scrollbar*/
 .swiper-scrollbar {
   border-radius:10px;
