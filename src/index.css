@@ -385,6 +385,11 @@ li {
     width: 100vw;
   }
 }
+@media screen and (max-width: 615px) {
+  .photos-wrapper {
+    grid-row-gap: 20px;
+  }
+}
 
 @media screen and (min-width: 1580px) {
   .photos-wrapper {
