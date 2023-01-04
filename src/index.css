@@ -389,6 +389,12 @@ li {
   .photos-wrapper {
     grid-row-gap: 20px;
   }
+  .delete-picture {
+    width: 10vw;
+    height: 10vw;
+    max-width: fit-content;
+    max-height: fit-content;
+  }
 }
 
 @media screen and (min-width: 1580px) {
