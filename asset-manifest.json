@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Photo-manager/static/css/main.f4dccb3b.css",
+    "main.css": "/Photo-manager/static/css/main.3e50ee95.css",
     "main.js": "/Photo-manager/static/js/main.299d1c91.js",
     "static/media/auth-background.jpg": "/Photo-manager/static/media/auth-background.4be647a3af0c2067c731.jpg",
     "static/media/close-svgrepo-com.svg": "/Photo-manager/static/media/close-svgrepo-com.642ea76b198697a22bd55e92dc525a59.svg",
@@ -12,11 +12,11 @@
     "static/media/down-arrow.svg": "/Photo-manager/static/media/down-arrow.474a217e009ff1c865cb2982f6e235f2.svg",
     "static/media/arrow-left.svg": "/Photo-manager/static/media/arrow-left.ad31aed58a86a5d4d0f9549b3a2a87ac.svg",
     "index.html": "/Photo-manager/index.html",
-    "main.f4dccb3b.css.map": "/Photo-manager/static/css/main.f4dccb3b.css.map",
+    "main.3e50ee95.css.map": "/Photo-manager/static/css/main.3e50ee95.css.map",
     "main.299d1c91.js.map": "/Photo-manager/static/js/main.299d1c91.js.map"
   },
   "entrypoints": [
-    "static/css/main.f4dccb3b.css",
+    "static/css/main.3e50ee95.css",
     "static/js/main.299d1c91.js"
   ]
 }
