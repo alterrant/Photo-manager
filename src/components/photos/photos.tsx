@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import classNames from 'classnames';
 
 import { Photo } from './photo';
 import { useFirestoreGetUserPhotos } from '../../hooks/use-firestore';
@@ -9,31 +10,11 @@ type PhotosType = {
 };
 
 export const Photos = (properties: PhotosType) => {
-  const isOnePhoto = 'one-photo-grid';
-  const isTwoPhoto = 'two-photo-grid';
-  let styleWrapperPhotos;
-
   const userPhotos = useFirestoreGetUserPhotos();
 
-  switch (userPhotos.length) {
-    case 1:
-      styleWrapperPhotos = isOnePhoto;
-      break;
-
-    case 2:
-      styleWrapperPhotos = isTwoPhoto;
-      break;
-
-    default:
-      styleWrapperPhotos = 'photos-wrapper';
-      break;
-  }
-
   return (
-    <div>
-      <ul className={styleWrapperPhotos}>
-        <Photo {...properties} photos={userPhotos} />
-      </ul>
-    </div>
+    <ul className={classNames('photos-wrapper', userPhotos.length === 1 && 'one-photo-grid')}>
+      <Photo {...properties} photos={userPhotos} />
+    </ul>
   );
 };

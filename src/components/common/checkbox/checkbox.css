@@ -12,7 +12,7 @@
   height: 18px;
   width: 18px;
   background: #FFFFFF;;
-  border: .1vw solid #E6E6E6;
+  border: .1vmax solid #E6E6E6;
   cursor: pointer;
 
   display: flex;
