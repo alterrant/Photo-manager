@@ -91,10 +91,10 @@ export const Input = ({
   return (
     <>
       <label className={labelClass}>
-        <span className="labelText">
+        <div className="labelText">
           {label} {required && ' *'}
-        </span>
-        <span className="inputWrapper">
+        </div>
+        <div className="inputWrapper">
           <input
             type={inputType}
             defaultValue={defaultValue}
@@ -109,7 +109,7 @@ export const Input = ({
               <img src={inputTypePassword.img} alt="hide password img" />
             </div>
           )}
-        </span>
+        </div>
       </label>
       {!errorMessage && helpText && <span>{helpText}</span>}
       {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
