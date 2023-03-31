@@ -14,7 +14,7 @@ This is a gallery with the ability to view photos or compare with your own.
 - **Authorisation**: OAuth 2.0(GitHub, Google), Jwt(Email)
 - **User profile**: change avatar
 - **User photos**: add, delete own protos
-- **Photos**: view all photos, view photo slides
+- **Photos**: view all photos, view your own photos, view photo slides
 - **Photo slides**: add photos to compare, hide thumbs
 
 ## Technology stack
